@@ -22,4 +22,19 @@
     <!-- Menu bar strings -->
     <string name="delete_entry_button">Delete entry</string>
     <string name="save_entry">Save</string>
+
+    <!-- Method spinner options -->
+    <string-array name="method_options">
+        <item>French Press</item>
+        <item>Aeropress</item>
+        <item>Pour over</item>
+        <item>Moka pot</item>
+    </string-array>
+
+    <!-- Extraction spinner options -->
+    <string-array name="extraction_options">
+        <item>Underextracted</item>
+        <item>Balanced</item>
+        <item>Overextracted</item>
+    </string-array>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.keelan542.coffeelog;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
-public class EditorActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     // Method spinner
     private Spinner mMethodSpinner;
@@ -138,5 +145,23 @@ public class EditorActivity extends AppCompatActivity {
 
     public void saveEntry() {
 
+    }
+
+    // Method to show DatePicker onClick of button
+    public void datePicker(View view){
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.show(getFragmentManager(), "datePicker");
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = new GregorianCalendar(year, month, dayOfMonth);
+        setDate(calendar);
+    }
+
+    private void setDate(final Calendar calendar) {
+        final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        TextView showDate = (TextView) findViewById(R.id.show_date);
+        showDate.setText(dateFormat.format(calendar.getTime()));
     }
 }

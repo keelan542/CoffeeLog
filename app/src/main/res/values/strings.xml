@@ -18,6 +18,7 @@
     <string name="date_edit_label">Date Brewed</string>
     <string name="ratio_view_label">Ratio</string>
     <string name="ratio_button">Calculate</string>
+    <string name="pick_date_button">Pick date</string>
 
     <!-- Menu bar strings -->
     <string name="delete_entry_button">Delete entry</string>

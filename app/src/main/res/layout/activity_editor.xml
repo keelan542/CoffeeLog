@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="com.example.keelan542.coffeelog.EditorActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:focusableInTouchMode="true"
         android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <LinearLayout
@@ -28,8 +28,8 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="2">
 
                 <Spinner
                     android:id="@+id/method_spinner"
@@ -107,28 +107,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/ratio_view_label"
                 style="@style/CategoryStyle"
-                android:text="@string/ratio_view_label"/>
+                android:text="@string/ratio_view_label" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="2">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
-                    android:text="@string/ratio_button"
-                    android:fontFamily="sans-serif-medium"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
                     android:layout_gravity="center"
-                    android:background="@color/colorAccent"/>
+                    android:background="@color/colorAccent"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/ratio_button"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -147,8 +147,8 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -204,12 +204,12 @@
             <TextView
                 android:id="@+id/extraction_edit_label"
                 style="@style/CategoryStyle"
-                android:text="@string/extraction_edit_label"/>
+                android:text="@string/extraction_edit_label" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="2">
 
                 <Spinner
                     android:id="@+id/extraction_spinner"
@@ -230,20 +230,33 @@
             <TextView
                 android:id="@+id/date_edit_label"
                 style="@style/CategoryStyle"
-                android:text="@string/date_edit_label"/>
+                android:text="@string/date_edit_label" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="2">
 
-                <DatePicker
-                    android:id="@+id/date_picker"
+                <Button
+                    android:id="@+id/pick_date_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="sans-serif-medium"
+                    android:onClick="datePicker"
+                    android:text="@string/pick_date_button"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
 
-
-                </DatePicker>
+                <TextView
+                    android:id="@+id/show_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="sans-serif"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="?android:textAppearanceMedium" />
 
             </LinearLayout>
 

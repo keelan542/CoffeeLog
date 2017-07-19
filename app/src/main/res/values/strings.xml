@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Coffee Log</string>
+
+    <!-- Labels and hints for edit texts in editor -->
+    <string name="method_edit_label">Method</string>
+    <string name="method_edit_hint">Method used</string>
+    <string name="coffee_used_edit_label">Coffee</string>
+    <string name="coffee_used_edit_hint">Amount used</string>
+    <string name="unit_coffee_used">g</string>
+    <string name="water_used_edit_label">Yield</string>
+    <string name="water_used_edit_hint">Coffee made</string>
+    <string name="time_edit_label">Brew Time</string>
+    <string name="time_mins_edit_hint">Minutes</string>
+    <string name="mins">Minutes</string>
+    <string name="time_sec_edit_hint">Seconds</string>
+    <string name="seconds">Seconds</string>
+    <string name="extraction_edit_label">Extraction</string>
+    <string name="date_edit_label">Date Brewed</string>
+    <string name="ratio_view_label">Ratio</string>
+    <string name="ratio_button">Calculate</string>
 </resources>

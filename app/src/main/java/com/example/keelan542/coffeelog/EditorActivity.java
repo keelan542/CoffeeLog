@@ -47,6 +47,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // Seconds edit text
     private EditText mSecondsEditText;
 
+    // TextView to display date
+    private TextView mShowDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,8 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mYieldEditText = (EditText) findViewById(R.id.water_used_edit_text);
         mMinutesEditText = (EditText) findViewById(R.id.time_mins_edit_text);
         mSecondsEditText = (EditText) findViewById(R.id.time_sec_edit_text);
+
+        mShowDate = (TextView) findViewById(R.id.show_date);
 
         setupSpinners();
     }
@@ -153,15 +158,16 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         fragment.show(getFragmentManager(), "datePicker");
     }
 
+    // Called once date is set, calls setDate()
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar = new GregorianCalendar(year, month, dayOfMonth);
         setDate(calendar);
     }
 
+    // Set selected date on TextView
     private void setDate(final Calendar calendar) {
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        TextView showDate = (TextView) findViewById(R.id.show_date);
-        showDate.setText(dateFormat.format(calendar.getTime()));
+        mShowDate.setText(dateFormat.format(calendar.getTime()));
     }
 }

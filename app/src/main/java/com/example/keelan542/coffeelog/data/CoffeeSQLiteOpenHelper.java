@@ -27,7 +27,8 @@ public class CoffeeSQLiteOpenHelper extends SQLiteOpenHelper {
                 + CoffeeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + CoffeeEntry.COLUMN_LOG_METHOD + " TEXT NOT NULL, "
                 + CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT + " TEXT NOT NULL, "
-                + CoffeeEntry.COLUMN_LOG_WATER_AMOUNT + " TEXT NOT NULL, "
+                + CoffeeEntry.COLUMN_LOG_YIELD + " TEXT NOT NULL, "
+                + CoffeeEntry.COLUMN_LOG_RATIO + " TEXT NOT NULL, "
                 + CoffeeEntry.COLUMN_LOG_TIME + " TEXT NOT NULL, "
                 + CoffeeEntry.COLUMN_LOG_EXTRACTION + " INTEGER NOT NULL, "
                 + CoffeeEntry.COLUMN_LOG_DATE + " TEXT NOT NULL);";

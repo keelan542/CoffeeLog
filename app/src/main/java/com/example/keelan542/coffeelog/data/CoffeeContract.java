@@ -36,7 +36,8 @@ public class CoffeeContract {
         public static final String _ID = BaseColumns._ID;
         public static final String COLUMN_LOG_METHOD = "method";
         public static final String COLUMN_LOG_COFFEE_AMOUNT = "coffee_amount";
-        public static final String COLUMN_LOG_WATER_AMOUNT = "water_amount";
+        public static final String COLUMN_LOG_YIELD = "yield";
+        public static final String COLUMN_LOG_RATIO = "ratio";
         public static final String COLUMN_LOG_TIME = "time";
         public static final String COLUMN_LOG_EXTRACTION = "extraction";
         public static final String COLUMN_LOG_DATE = "date";

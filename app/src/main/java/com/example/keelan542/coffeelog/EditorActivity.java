@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,8 +69,12 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mExtractionSpinner = (Spinner) findViewById(R.id.extraction_spinner);
         mCoffeeUsedEditText = (EditText) findViewById(R.id.coffee_used_edit_text);
         mYieldEditText = (EditText) findViewById(R.id.water_used_edit_text);
+
+        // Get references to minutes and seconds edit fields and set custom filter
         mMinutesEditText = (EditText) findViewById(R.id.time_mins_edit_text);
+        mMinutesEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", "1000")});
         mSecondsEditText = (EditText) findViewById(R.id.time_sec_edit_text);
+        mSecondsEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
 
         // Get reference to TextView that shows the selected date
         mShowDate = (TextView) findViewById(R.id.show_date);

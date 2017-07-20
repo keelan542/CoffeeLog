@@ -10,10 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
@@ -47,6 +49,12 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // Seconds edit text
     private EditText mSecondsEditText;
 
+    // Ratio button
+    private Button mRatioButton;
+
+    // String to sore ratio
+    private String mRatio;
+
     // TextView to display date
     private TextView mShowDate;
 
@@ -55,6 +63,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
+        // Get references to edit fields
         mMethodSpinner = (Spinner) findViewById(R.id.method_spinner);
         mExtractionSpinner = (Spinner) findViewById(R.id.extraction_spinner);
         mCoffeeUsedEditText = (EditText) findViewById(R.id.coffee_used_edit_text);
@@ -62,9 +71,26 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mMinutesEditText = (EditText) findViewById(R.id.time_mins_edit_text);
         mSecondsEditText = (EditText) findViewById(R.id.time_sec_edit_text);
 
+        // Get reference to TextView that shows the selected date
         mShowDate = (TextView) findViewById(R.id.show_date);
 
         setupSpinners();
+
+        // Setup Calculate button to show ratio of brew
+        mRatioButton = (Button) findViewById(R.id.show_ratio_button);
+        mRatioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String coffeeUsedString = mCoffeeUsedEditText.getText().toString().trim();
+                String yieldString = mYieldEditText.getText().toString().trim();
+                if (!TextUtils.isEmpty(coffeeUsedString) && !TextUtils.isEmpty(yieldString)) {
+                    double coffeeUsed = Double.parseDouble(coffeeUsedString);
+                    double yield = Double.parseDouble(yieldString);
+                    mRatio = String.valueOf(Math.round((yield / coffeeUsed) * 100.0)/100.0);
+                    Toast.makeText(EditorActivity.this, "Ratio is: 1:" + mRatio, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -81,7 +107,6 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             // Respond to a click on the save button
             case R.id.action_save:
                 saveEntry();
-                finish();
                 return true;
             // Respond to a click on the delete button
             case R.id.action_delete:

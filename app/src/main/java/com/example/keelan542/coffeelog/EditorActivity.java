@@ -175,6 +175,30 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
     public void saveEntry() {
 
+        // Get text of edit fields and store in variables
+        String coffeeUsed = mCoffeeUsedEditText.getText().toString().trim();
+        String yield = mYieldEditText.getText().toString().trim();
+        String minutesString = mMinutesEditText.getText().toString().trim();
+        String secondsString = mSecondsEditText.getText().toString().trim();
+
+        // Check if fields empty and if so
+        // show a Toast rather than proceed
+        if (TextUtils.isEmpty(coffeeUsed) ||
+                TextUtils.isEmpty(yield) ||
+                TextUtils.isEmpty(minutesString) ||
+                TextUtils.isEmpty(secondsString) ||
+                TextUtils.isEmpty(mShowDate.getText().toString())) {
+
+            Toast.makeText(this, getString(R.string.fields_empty), Toast.LENGTH_SHORT).show();
+        } else {
+            // Convert time into total seconds and store in string
+            int minutes = Integer.parseInt(minutesString);
+            int seconds = Integer.parseInt(secondsString);
+            int totalTimeInSeconds = (minutes * 60) + seconds;
+            String timeString = String.valueOf(totalTimeInSeconds);
+
+            finish();
+        }
     }
 
     // Method to show DatePicker onClick of button

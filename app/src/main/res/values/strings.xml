@@ -38,4 +38,7 @@
         <item>Balanced</item>
         <item>Overextracted</item>
     </string-array>
+
+    <!-- Message if edit fields empty -->
+    <string name="fields_empty">Must fill out all fields</string>
 </resources>

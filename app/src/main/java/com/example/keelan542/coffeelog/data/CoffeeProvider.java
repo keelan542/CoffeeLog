@@ -114,7 +114,43 @@ public class CoffeeProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case COFFEE:
+                return updateEntry(uri, values, selection, selectionArgs);
+            case COFFEE_ID:
+                // Extract id out of uri so we know which row to update
+                selection = CoffeeEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                return updateEntry(uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
+    }
+
+    // Method to update entry in database with given content values, if there
+    // is any. Returns the number of rows updated.
+    private int updateEntry(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+        // Check if content values size is 0. If so, return early as
+        // no update necessary
+        if (values.size() == 0) {
+            return 0;
+        }
+
+        // Get writable database
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        // Update the entry with given values
+        int rowsUpdated = db.update(CoffeeEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        // If rows updated is not 0, notify listeners that data at given uri
+        // has changed.
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsUpdated;
     }
 
     @Override

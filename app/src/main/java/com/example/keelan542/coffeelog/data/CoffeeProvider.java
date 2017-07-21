@@ -155,7 +155,37 @@ public class CoffeeProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case COFFEE:
+                return deleteEntry(uri, selection, selectionArgs);
+            case COFFEE_ID:
+                selection = CoffeeEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+
+                return deleteEntry(uri, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
+    }
+
+    // Method to delete entry or all entries with given content values.
+    // Returns the number of rows deleted.
+    private int deleteEntry(Uri uri, String selection, String[] selectionArgs) {
+
+        // Get writable database
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        // Perform delete operation
+        int rowsDeleted = db.delete(CoffeeEntry.TABLE_NAME, selection, selectionArgs);
+
+        // If more than 0 rows deleted, notify listeners that data
+        // at given uri has changed.
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsDeleted;
     }
 
     @Override

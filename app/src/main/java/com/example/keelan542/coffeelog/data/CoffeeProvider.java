@@ -7,8 +7,11 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
+
+import static android.R.attr.id;
 
 /**
  * Created by keelan542 on 20/07/2017.
@@ -81,7 +84,32 @@ public class CoffeeProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case COFFEE:
+                return insertEntry(uri, values);
+            default:
+                throw new IllegalArgumentException("Insertion is not supported for " + uri);
+        }
+    }
+
+    // Method to insert entry with given content values into database. Return the
+    // new content uri for that specific row in the database
+    private Uri insertEntry(Uri uri, ContentValues values) {
+
+        // Get writable database
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        // Insert the new entry with given values
+        long rowId = db.insert(CoffeeEntry.TABLE_NAME, null, values);
+
+        // If the id is -1, then the insertion failed
+        if (id == -1) {
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
+
+        return ContentUris.withAppendedId(uri, rowId);
     }
 
     @Override

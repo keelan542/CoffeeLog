@@ -70,6 +70,13 @@ public class CoffeeProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Cannot query unknown uri: " + uri);
         }
+
+        // Set notification on the cursor
+        // so we know what content uri was created for.
+        // If the data at this uri changes, then we know to update cursor
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
+        return cursor;
     }
 
     @Override

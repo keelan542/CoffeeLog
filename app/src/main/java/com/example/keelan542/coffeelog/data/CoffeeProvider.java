@@ -1,10 +1,14 @@
 package com.example.keelan542.coffeelog.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+
+import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 /**
  * Created by keelan542 on 20/07/2017.
@@ -43,7 +47,29 @@ public class CoffeeProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+
+        // Get readable database
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // This cursor will load the result of the query
+        Cursor cursor;
+
+        // Figure out if UriMatcher can match the uri to a specific integer code
+        int match = sUriMatcher.match(uri);
+        switch (match) {
+            case COFFEE:
+                // Perform database query on coffee_log table
+                cursor = db.query(CoffeeEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case COFFEE_ID:
+                // Perform databse query on a single entry of coffee_log table
+                selection = CoffeeEntry._ID + "=?";
+                selectionArgs = new String[] {  String.valueOf(ContentUris.parseId(uri)) };
+                cursor = db.query(CoffeeEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            default:
+                throw new IllegalArgumentException("Cannot query unknown uri: " + uri);
+        }
     }
 
     @Override

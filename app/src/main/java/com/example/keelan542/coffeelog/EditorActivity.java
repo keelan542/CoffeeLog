@@ -59,6 +59,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // TextView to display date
     private TextView mShowDate;
 
+    // TextView to display ratio
+    private TextView mShowRatio;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +79,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mSecondsEditText = (EditText) findViewById(R.id.time_sec_edit_text);
         mSecondsEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
 
-        // Get reference to TextView that shows the selected date
+        // Get reference to TextViews that shows the selected date and ratio
         mShowDate = (TextView) findViewById(R.id.show_date);
+        mShowRatio = (TextView) findViewById(R.id.show_ratio);
 
         setupSpinners();
 
@@ -92,7 +96,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                     double coffeeUsed = Double.parseDouble(coffeeUsedString);
                     double yield = Double.parseDouble(yieldString);
                     mRatio = String.valueOf(Math.round((yield / coffeeUsed) * 100.0)/100.0);
-                    Toast.makeText(EditorActivity.this, "Ratio is: 1:" + mRatio, Toast.LENGTH_LONG).show();
+                    mShowRatio.setText("1:" + mRatio);
                 }
             }
         });

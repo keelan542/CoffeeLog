@@ -131,6 +131,15 @@
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/show_ratio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="sans-serif"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -188,8 +188,17 @@ public class CoffeeProvider extends ContentProvider {
         return rowsDeleted;
     }
 
+    // Returns the MIME type of data for the content uri
     @Override
     public String getType(Uri uri) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case COFFEE:
+                return CoffeeEntry.CONTENT_LIST_TYPE;
+            case COFFEE_ID:
+                return CoffeeEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknown uri " + uri + " with match " + match);
+        }
     }
 }

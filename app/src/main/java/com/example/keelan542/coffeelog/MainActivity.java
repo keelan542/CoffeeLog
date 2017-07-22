@@ -1,13 +1,23 @@
 package com.example.keelan542.coffeelog;
 
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
+
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    // Cursor adapter
+    private CoffeeCursorAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +38,44 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.list);
 
         // Create instance of CoffeeCursorAdapter
-        CoffeeCursorAdapter adapter = new CoffeeCursorAdapter(this, null);
+        mAdapter = new CoffeeCursorAdapter(this, null);
 
         // Set adapter on listView
-        listView.setAdapter(adapter);
+        listView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        // Create base uri
+        Uri baseUri = CoffeeEntry.CONTENT_URI;
+
+        // Create a custom loader that will take care
+        // of creating a cursor for data being displayed
+        String projection[] = {
+                CoffeeEntry._ID,
+                CoffeeEntry.COLUMN_LOG_METHOD,
+                CoffeeEntry.COLUMN_LOG_DATE,
+                CoffeeEntry.COLUMN_LOG_EXTRACTION};
+
+        return new CursorLoader(this,
+                baseUri,
+                projection,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        // Swap the new cursor in
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        // Called when last Cursor provided to onLoadFinished()
+        // is about to be closed
+        mAdapter.swapCursor(null);
     }
 }

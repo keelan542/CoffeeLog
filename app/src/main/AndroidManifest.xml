@@ -18,6 +18,10 @@
         </activity>
         <activity android:name=".EditorActivity"
             android:parentActivityName=".MainActivity"></activity>
+        <provider
+            android:authorities="com.example.keelan542.coffeelog"
+            android:name=".data.CoffeeProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

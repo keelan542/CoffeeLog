@@ -1,6 +1,8 @@
 package com.example.keelan542.coffeelog;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -205,6 +207,29 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             int seconds = Integer.parseInt(secondsString);
             int totalTimeInSeconds = (minutes * 60) + seconds;
             String timeString = String.valueOf(totalTimeInSeconds);
+            String date = mShowDate.getText().toString();
+
+            // New instance of ContentValues
+            ContentValues values = new ContentValues();
+
+            // Insert data into values
+            values.put(CoffeeEntry.COLUMN_LOG_METHOD, mMethod);
+            values.put(CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT, coffeeUsed);
+            values.put(CoffeeEntry.COLUMN_LOG_YIELD, yield);
+            values.put(CoffeeEntry.COLUMN_LOG_RATIO, mRatio);
+            values.put(CoffeeEntry.COLUMN_LOG_TIME, timeString);
+            values.put(CoffeeEntry.COLUMN_LOG_EXTRACTION, mExtraction);
+            values.put(CoffeeEntry.COLUMN_LOG_DATE, date);
+
+            // Insert values into coffee_log database
+            Uri uri = getContentResolver().insert(CoffeeEntry.CONTENT_URI, values);
+
+            // Display toast depending on whether insertion successful or not
+            if (uri == null) {
+                Toast.makeText(this, getString(R.string.insertion_successful), Toast.LENGTH_SHORT);
+            } else {
+                Toast.makeText(this, getString(R.string.insertion_failed), Toast.LENGTH_SHORT);
+            }
 
             finish();
         }

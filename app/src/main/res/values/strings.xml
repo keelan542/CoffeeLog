@@ -41,4 +41,8 @@
 
     <!-- Message if edit fields empty -->
     <string name="fields_empty">Must fill out all fields</string>
+
+    <!-- Message to display if insertion successful or not -->
+    <string name="insertion_successful">Saved entry</string>
+    <string name="insertion_failed">Save failed</string>
 </resources>

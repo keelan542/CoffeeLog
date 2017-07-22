@@ -37,6 +37,18 @@ public class CoffeeCursorAdapter extends CursorAdapter {
         String methodString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_METHOD));
         String dateString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_DATE));
         String extractionString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_EXTRACTION));
+        int extractionNumber = Integer.parseInt(extractionString);
+        switch (extractionNumber) {
+            case 0:
+                extractionString = (context.getResources().getStringArray(R.array.extraction_options))[0];
+                break;
+            case 1:
+                extractionString = (context.getResources().getStringArray(R.array.extraction_options))[1];
+                break;
+            case 2:
+                extractionString = (context.getResources().getStringArray(R.array.extraction_options))[2];
+                break;
+        }
 
         // Set values on textViews
         method.setText(methodString);

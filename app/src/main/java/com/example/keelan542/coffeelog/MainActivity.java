@@ -16,6 +16,9 @@ import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    // Loader id
+    private static final int LOADER_ID = 1;
+
     // Cursor adapter
     private CoffeeCursorAdapter mAdapter;
 
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Set adapter on listView
         listView.setAdapter(mAdapter);
+
+        // Initialise loader
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override

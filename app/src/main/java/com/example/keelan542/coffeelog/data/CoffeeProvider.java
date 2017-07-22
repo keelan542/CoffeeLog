@@ -109,6 +109,9 @@ public class CoffeeProvider extends ContentProvider {
             return null;
         }
 
+        // Notify all listeners that data has changed for content uri
+        getContext().getContentResolver().notifyChange(uri, null);
+
         return ContentUris.withAppendedId(uri, rowId);
     }
 

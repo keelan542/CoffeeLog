@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,5 +23,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Find listView
+        ListView listView = (ListView) findViewById(R.id.list);
+
+        // Create instance of CoffeeCursorAdapter
+        CoffeeCursorAdapter adapter = new CoffeeCursorAdapter(this, null);
+
+        // Set adapter on listView
+        listView.setAdapter(adapter);
     }
 }

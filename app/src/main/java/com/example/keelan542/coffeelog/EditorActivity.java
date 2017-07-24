@@ -1,7 +1,11 @@
 package com.example.keelan542.coffeelog;
 
 import android.app.DatePickerDialog;
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -26,7 +30,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, LoaderManager.LoaderCallbacks<Cursor>{
 
     // Method spinner
     private Spinner mMethodSpinner;
@@ -38,7 +42,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     private int mExtraction = 0;
 
     // Method value
-    private String mMethod;
+    private int mMethod = 0;
 
     // Coffee used edit text
     private EditText mCoffeeUsedEditText;
@@ -66,6 +70,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
     // Current entry uri
     private Uri mCurrentEntryUri;
+
+    // Loader id
+    private static final int LOADER_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +122,8 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             setTitle(getString(R.string.title_add_entry));
         } else {
             setTitle(getString(R.string.title_edit_entry));
+
+            getLoaderManager().initLoader(LOADER_ID, null, this);
         }
     }
 
@@ -189,7 +198,19 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mMethod = (String) parent.getItemAtPosition(position);
+                String selection = (String) parent.getItemAtPosition(position);
+                String[] array = getResources().getStringArray(R.array.method_options);
+                if (!TextUtils.isEmpty(selection)) {
+                    if (selection.equals(array[0])) {
+                        mMethod = CoffeeEntry.METHOD_FRENCH_PRESS;
+                    } else if (selection.equals(array[1])) {
+                        mMethod = CoffeeEntry.METHOD_AEROPRESS;
+                    } else if (selection.equals(array[2])) {
+                        mMethod = CoffeeEntry.METHOD_POUR_OVER;
+                    } else {
+                        mMethod = CoffeeEntry.METHOD_MOKA_POT;
+                    }
+                }
             }
 
             @Override
@@ -259,6 +280,8 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         } else {
             Toast.makeText(this, getString(R.string.editor_delete_failed), Toast.LENGTH_SHORT).show();
         }
+
+        finish();
     }
 
     // Method to show DatePicker onClick of button
@@ -278,5 +301,70 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     private void setDate(final Calendar calendar) {
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
         mShowDate.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // Create a cursor loader that will take care
+        // of creating a cursor for data being displayed
+        String projection[] = {
+                CoffeeEntry._ID,
+                CoffeeEntry.COLUMN_LOG_METHOD,
+                CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT,
+                CoffeeEntry.COLUMN_LOG_YIELD,
+                CoffeeEntry.COLUMN_LOG_RATIO,
+                CoffeeEntry.COLUMN_LOG_TIME,
+                CoffeeEntry.COLUMN_LOG_EXTRACTION,
+                CoffeeEntry.COLUMN_LOG_DATE};
+
+        return new CursorLoader(this,
+                mCurrentEntryUri,
+                projection,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        // Move cursor to 0th position
+        // before extracting columns
+        if (data.moveToFirst()) {
+
+            // Update editor fields and spinners with
+            // values from cursor
+            int method = data.getInt(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_METHOD));
+            String coffeeUsed = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT));
+            String yield = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_YIELD));
+            String ratio = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_RATIO));
+            String timeString = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_TIME));
+            int extraction = data.getInt(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_EXTRACTION));
+            String date = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_DATE));
+
+            // Seperate timeString into minutes and seconds
+            int minutes = Integer.parseInt(timeString)/60;
+            int seconds = Integer.parseInt(timeString)%60;
+
+            // Set values from cursor on fields
+            mMethodSpinner.setSelection(method);
+            mCoffeeUsedEditText.setText(coffeeUsed);
+            mYieldEditText.setText(yield);
+            mShowRatio.setText("1:" + ratio);
+            mMinutesEditText.setText(minutes+"");
+            mSecondsEditText.setText(seconds+"");
+            mExtractionSpinner.setSelection(extraction);
+            mShowDate.setText(date);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        // Clear all fields.
+        mCoffeeUsedEditText.getText().clear();
+        mYieldEditText.getText().clear();
+        mShowRatio.setText("");
+        mMinutesEditText.getText().clear();
+        mSecondsEditText.getText().clear();
+        mShowDate.setText("");
     }
 }

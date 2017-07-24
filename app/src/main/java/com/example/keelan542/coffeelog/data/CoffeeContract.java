@@ -47,6 +47,12 @@ public class CoffeeContract {
         public static final int EXTRACTION_BALANCED = 1;
         public static final int EXTRACTION_OVER = 2;
 
+        // Different integer values for method
+        public static final int METHOD_FRENCH_PRESS = 0;
+        public static final int METHOD_AEROPRESS = 1;
+        public static final int METHOD_POUR_OVER = 2;
+        public static final int METHOD_MOKA_POT = 3;
+
         // Returns whether or not the given extraction is EXTRACTION_UNDER, EXTRACTION_BALANCED,
         // OR EXTRACTION_OVER
         public static boolean isValidExtraction(int extraction) {

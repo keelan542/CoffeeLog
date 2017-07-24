@@ -25,7 +25,7 @@ public class CoffeeSQLiteOpenHelper extends SQLiteOpenHelper {
         // Create string to hold SQL statement to create coffee_log table
         String CREATE_COFFEE_LOG_TABLE = "Create Table " + CoffeeEntry.TABLE_NAME + " ("
                 + CoffeeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + CoffeeEntry.COLUMN_LOG_METHOD + " TEXT NOT NULL, "
+                + CoffeeEntry.COLUMN_LOG_METHOD + " INTEGER NOT NULL, "
                 + CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT + " TEXT NOT NULL, "
                 + CoffeeEntry.COLUMN_LOG_YIELD + " TEXT NOT NULL, "
                 + CoffeeEntry.COLUMN_LOG_RATIO + " TEXT NOT NULL, "

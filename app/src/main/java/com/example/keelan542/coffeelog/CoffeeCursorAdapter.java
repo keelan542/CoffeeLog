@@ -34,7 +34,8 @@ public class CoffeeCursorAdapter extends CursorAdapter {
         TextView extraction = (TextView) view.findViewById(R.id.extraction);
 
         // Get required values from cursor object
-        String methodString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_METHOD));
+        int methodNumber = cursor.getInt(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_METHOD));
+        String methodString = "";
         String dateString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_DATE));
         String extractionString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_EXTRACTION));
         int extractionNumber = Integer.parseInt(extractionString);
@@ -47,6 +48,21 @@ public class CoffeeCursorAdapter extends CursorAdapter {
                 break;
             case 2:
                 extractionString = (context.getResources().getStringArray(R.array.extraction_options))[2];
+                break;
+        }
+
+        switch (methodNumber) {
+            case 0:
+                methodString = (context.getResources().getStringArray(R.array.method_options)[0]);
+                break;
+            case 1:
+                methodString = (context.getResources().getStringArray(R.array.method_options)[1]);
+                break;
+            case 2:
+                methodString = (context.getResources().getStringArray(R.array.method_options)[2]);
+                break;
+            case 3:
+                methodString = (context.getResources().getStringArray(R.array.method_options)[3]);
                 break;
         }
 

@@ -105,6 +105,17 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 }
             }
         });
+
+        // Check whether mCurrentEntryUri is null.
+        // If null, proceed with adding new entry, if not,
+        // initialise loader to populate fields with data of entry
+        // that was clicked on.
+        mCurrentEntryUri = getIntent().getData();
+        if (mCurrentEntryUri == null) {
+            setTitle(getString(R.string.title_add_entry));
+        } else {
+            setTitle(getString(R.string.title_edit_entry));
+        }
     }
 
     @Override

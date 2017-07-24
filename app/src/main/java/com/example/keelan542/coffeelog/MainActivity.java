@@ -1,6 +1,7 @@
 package com.example.keelan542.coffeelog;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
@@ -21,6 +23,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Cursor adapter
     private CoffeeCursorAdapter mAdapter;
+
+    // Current entry uri
+    private Uri mCurrentEntryUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Set adapter on listView
         listView.setAdapter(mAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Form content uri with appended id of entry that was clicked on
+                mCurrentEntryUri = ContentUris.withAppendedId(CoffeeEntry.CONTENT_URI, id);
+
+                // Create new intent to got to EditorActivity
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+
+                // Set mCurrentEntryUri as data of intent
+                intent.setData(mCurrentEntryUri);
+
+                // Launch Editor activity to display data of selected entry
+                startActivity(intent);
+            }
+        });
 
         // Initialise loader
         getLoaderManager().initLoader(LOADER_ID, null, this);

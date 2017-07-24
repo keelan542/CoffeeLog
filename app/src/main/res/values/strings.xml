@@ -49,4 +49,8 @@
     <!-- Message to display if deletion successful or not -->
     <string name="editor_delete_successful">Entry deleted</string>
     <string name="editor_delete_failed">Deletion falied</string>
+
+    <!-- Titles for add new entry and edit entry -->
+    <string name="title_add_entry">Add Entry</string>
+    <string name="title_edit_entry">Edit Entry</string>
 </resources>

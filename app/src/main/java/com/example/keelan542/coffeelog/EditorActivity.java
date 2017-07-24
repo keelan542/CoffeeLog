@@ -64,6 +64,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // TextView to display ratio
     private TextView mShowRatio;
 
+    // Current entry uri
+    private Uri mCurrentEntryUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +124,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 return true;
             // Respond to a click on the delete button
             case R.id.action_delete:
+                deleteEntry();
                 return true;
             // Respond to a click on up arrow
             case android.R.id.home:
@@ -232,6 +236,17 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             }
 
             finish();
+        }
+    }
+
+    private void deleteEntry() {
+
+        int rowsDeleted = getContentResolver().delete(mCurrentEntryUri, null, null);
+
+        if (rowsDeleted != 0) {
+            Toast.makeText(this, getString(R.string.editor_delete_successful), Toast.LENGTH_SHORT);
+        } else {
+            Toast.makeText(this, getString(R.string.editor_delete_failed), Toast.LENGTH_SHORT).show();
         }
     }
 

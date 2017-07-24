@@ -45,4 +45,8 @@
     <!-- Message to display if insertion successful or not -->
     <string name="insertion_successful">Saved entry</string>
     <string name="insertion_failed">Save failed</string>
+
+    <!-- Message to display if deletion successful or not -->
+    <string name="editor_delete_successful">Entry deleted</string>
+    <string name="editor_delete_failed">Deletion falied</string>
 </resources>

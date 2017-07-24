@@ -38,7 +38,7 @@
         android:layout_centerVertical="true"
         android:layout_margin="16dp"
         android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceMedium"
+        android:textAppearance="?android:textAppearanceSmall"
         tools:text="Balanced" />
 
 </RelativeLayout>

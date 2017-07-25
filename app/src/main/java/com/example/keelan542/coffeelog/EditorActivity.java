@@ -128,6 +128,18 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        // Hide delete button if in Add entry mode
+        if (mCurrentEntryUri == null) {
+            MenuItem item = menu.findItem(R.id.action_delete);
+            item.setVisible(false);
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate menu
         getMenuInflater().inflate(R.menu.menu_editor, menu);

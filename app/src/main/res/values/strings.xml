@@ -50,6 +50,10 @@
     <string name="editor_delete_successful">Entry deleted</string>
     <string name="editor_delete_failed">Deletion falied</string>
 
+    <!-- Message to display if update successful or not -->
+    <string name="update_successful">Entry updated</string>
+    <string name="update_failed">Entry not updated</string>
+
     <!-- Titles for add new entry and edit entry -->
     <string name="title_add_entry">Add Entry</string>
     <string name="title_edit_entry">Edit Entry</string>

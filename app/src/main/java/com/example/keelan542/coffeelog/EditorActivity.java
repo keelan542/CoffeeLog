@@ -248,6 +248,12 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             // New instance of ContentValues
             ContentValues values = new ContentValues();
 
+            // Set mRatio if mCurrentEntryUri is not null
+            // as button may not have been clicked
+            if (mCurrentEntryUri != null && mRatio == null) {
+                mRatio = (mShowRatio.getText().toString()).substring(2);
+            }
+
             // Insert data into values
             values.put(CoffeeEntry.COLUMN_LOG_METHOD, mMethod);
             values.put(CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT, coffeeUsed);
@@ -257,14 +263,26 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             values.put(CoffeeEntry.COLUMN_LOG_EXTRACTION, mExtraction);
             values.put(CoffeeEntry.COLUMN_LOG_DATE, date);
 
-            // Insert values into coffee_log database
-            Uri uri = getContentResolver().insert(CoffeeEntry.CONTENT_URI, values);
+            if (mCurrentEntryUri == null) {
+                // Insert values into coffee_log database
+                Uri uri = getContentResolver().insert(CoffeeEntry.CONTENT_URI, values);
 
-            // Display toast depending on whether insertion successful or not
-            if (uri == null) {
-                Toast.makeText(this, getString(R.string.insertion_successful), Toast.LENGTH_SHORT);
+                // Display toast depending on whether insertion successful or not
+                if (uri == null) {
+                    Toast.makeText(this, getString(R.string.insertion_successful), Toast.LENGTH_SHORT);
+                } else {
+                    Toast.makeText(this, getString(R.string.insertion_failed), Toast.LENGTH_SHORT);
+                }
             } else {
-                Toast.makeText(this, getString(R.string.insertion_failed), Toast.LENGTH_SHORT);
+                // Update entry with values
+                int rowsUpdated = getContentResolver().update(mCurrentEntryUri, values, null, null);
+
+                // Display toast messages depending on whether update successfull or not
+                if (rowsUpdated != 0) {
+                    Toast.makeText(this, getString(R.string.update_successful), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, getString(R.string.update_failed), Toast.LENGTH_SHORT).show();
+                }
             }
 
             finish();

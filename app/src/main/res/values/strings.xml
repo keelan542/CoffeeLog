@@ -57,4 +57,12 @@
     <!-- Titles for add new entry and edit entry -->
     <string name="title_add_entry">Add Entry</string>
     <string name="title_edit_entry">Edit Entry</string>
+
+    <!-- AlertDialog messages -->
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="delete_confirm">Delete</string>
+    <string name="discard">Discard</string>
+    <string name="cancel_delete">Cancel</string>
+    <string name="discard_changes">Discard your changes?</string>
+    <string name="keep_editing">Keep editing</string>
 </resources>

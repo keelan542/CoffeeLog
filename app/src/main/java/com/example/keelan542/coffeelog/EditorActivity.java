@@ -1,9 +1,11 @@
 package com.example.keelan542.coffeelog;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -59,6 +62,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // Ratio button
     private Button mRatioButton;
 
+    // Date button
+    private Button mDateButton;
+
     // String to sore ratio
     private String mRatio;
 
@@ -73,6 +79,19 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
     // Loader id
     private static final int LOADER_ID = 0;
+
+    // Boolean to check whether entry has
+    // been edited, and if so, trigger AlertDialog.
+    private boolean mEntryHasChanged;
+
+    // Touch listener to check whether product has been edited
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            mEntryHasChanged = true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +110,25 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mSecondsEditText = (EditText) findViewById(R.id.time_sec_edit_text);
         mSecondsEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
 
-        // Get reference to TextViews that shows the selected date and ratio
+        // Get reference to TextViews and buttons that shows the selected date and ratio
         mShowDate = (TextView) findViewById(R.id.show_date);
         mShowRatio = (TextView) findViewById(R.id.show_ratio);
+        mDateButton = (Button) findViewById(R.id.pick_date_button);
+        mRatioButton = (Button) findViewById(R.id.show_ratio_button);
+
+        // Set mTouchListener on edit fields
+        mMethodSpinner.setOnTouchListener(mTouchListener);
+        mExtractionSpinner.setOnTouchListener(mTouchListener);
+        mCoffeeUsedEditText.setOnTouchListener(mTouchListener);
+        mYieldEditText.setOnTouchListener(mTouchListener);
+        mRatioButton.setOnTouchListener(mTouchListener);
+        mMinutesEditText.setOnTouchListener(mTouchListener);
+        mSecondsEditText.setOnTouchListener(mTouchListener);
+        mDateButton.setOnTouchListener(mTouchListener);
 
         setupSpinners();
 
         // Setup Calculate button to show ratio of brew
-        mRatioButton = (Button) findViewById(R.id.show_ratio_button);
         mRatioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,14 +186,105 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 return true;
             // Respond to a click on the delete button
             case R.id.action_delete:
-                deleteEntry();
+                showDeleteConfirmationDialog();
                 return true;
             // Respond to a click on up arrow
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                // If the product hasnt changed, continue navigating
+                // up to the parent activity
+                if (!mEntryHasChanged) {
+                    NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                    return true;
+                }
+
+                // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+                // Create a click listener to handle the user confirming that
+                // changes should be discarded.
+                DialogInterface.OnClickListener discardButtonClickListener =
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // User clicked "Discard" button, navigate to parent activity.
+                                NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                            }
+                        };
+
+                // Show a dialog that notifies the user they have unsaved changes
+                showUnsavedChangesDialog(discardButtonClickListener);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // If the pet hasn't changed, continue with handling back button press
+        if (!mEntryHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+
+        // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+        // Create a click listener to handle the user confirming that changes should be discarded.
+        DialogInterface.OnClickListener discardButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // User clicked "Discard" button, close the current activity.
+                        finish();
+                    }
+                };
+
+        // Show dialog that there are unsaved changes
+        showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
+    private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the positive and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.discard_changes));
+        builder.setPositiveButton(getString(R.string.discard), discardButtonClickListener);
+        builder.setNegativeButton(getString(R.string.keep_editing), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Keep editing" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.are_you_sure));
+        builder.setPositiveButton(getString(R.string.delete_confirm), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the pet.
+                deleteEntry();
+                finish();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.cancel_delete), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public void setupSpinners() {

@@ -65,4 +65,7 @@
     <string name="cancel_delete">Cancel</string>
     <string name="discard_changes">Discard your changes?</string>
     <string name="keep_editing">Keep editing</string>
+
+    <!-- Empty text -->
+    <string name="empty_view">Click the plus button to make your  first entry!</string>
 </resources>

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Current entry uri
     private Uri mCurrentEntryUri;
+
+    // Emtpy view
+    private TextView mEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        // Find listView
+        // Get reference to emtpy view
+        mEmptyView = (TextView) findViewById(R.id.empty_view);
+
+        // Find listView and set empty view
         ListView listView = (ListView) findViewById(R.id.list);
+        listView.setEmptyView(mEmptyView);
 
         // Create instance of CoffeeCursorAdapter
         mAdapter = new CoffeeCursorAdapter(this, null);

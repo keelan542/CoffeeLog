@@ -383,8 +383,13 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
             // Set mRatio if mCurrentEntryUri is not null
             // as button may not have been clicked
-            if (mCurrentEntryUri != null && mRatio == null) {
-                mRatio = (mShowRatio.getText().toString()).substring(2);
+            if (mCurrentEntryUri != null) {
+                if (!TextUtils.isEmpty(mCoffeeUsedEditText.getText().toString()) && !TextUtils.isEmpty(mYieldEditText.getText().toString())) {
+                    double coffeeUsedDouble = Double.parseDouble(mCoffeeUsedEditText.getText().toString());
+                    double yieldDouble = Double.parseDouble(mYieldEditText.getText().toString());
+                    mRatio = String.valueOf(Math.round((yieldDouble / coffeeUsedDouble) * 100.0) / 100.0);
+                    mShowRatio.setText("1:" + mRatio);
+                }
             }
 
             // Insert data into values

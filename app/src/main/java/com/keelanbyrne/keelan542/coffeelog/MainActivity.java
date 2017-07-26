@@ -1,4 +1,4 @@
-package com.example.keelan542.coffeelog;
+package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
+import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 

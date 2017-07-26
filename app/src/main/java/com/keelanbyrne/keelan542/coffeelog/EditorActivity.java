@@ -1,4 +1,4 @@
-package com.example.keelan542.coffeelog;
+package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -27,13 +27,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
+import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, LoaderManager.LoaderCallbacks<Cursor>{
+public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     // Method spinner
     private Spinner mMethodSpinner;
@@ -137,7 +137,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 if (!TextUtils.isEmpty(coffeeUsedString) && !TextUtils.isEmpty(yieldString)) {
                     double coffeeUsed = Double.parseDouble(coffeeUsedString);
                     double yield = Double.parseDouble(yieldString);
-                    mRatio = String.valueOf(Math.round((yield / coffeeUsed) * 100.0)/100.0);
+                    mRatio = String.valueOf(Math.round((yield / coffeeUsed) * 100.0) / 100.0);
                     mShowRatio.setText("1:" + mRatio);
                 }
             }
@@ -436,7 +436,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     // Method to show DatePicker onClick of button
-    public void datePicker(View view){
+    public void datePicker(View view) {
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.show(getFragmentManager(), "datePicker");
     }
@@ -493,16 +493,16 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             String date = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_DATE));
 
             // Seperate timeString into minutes and seconds
-            int minutes = Integer.parseInt(timeString)/60;
-            int seconds = Integer.parseInt(timeString)%60;
+            int minutes = Integer.parseInt(timeString) / 60;
+            int seconds = Integer.parseInt(timeString) % 60;
 
             // Set values from cursor on fields
             mMethodSpinner.setSelection(method);
             mCoffeeUsedEditText.setText(coffeeUsed);
             mYieldEditText.setText(yield);
             mShowRatio.setText("1:" + ratio);
-            mMinutesEditText.setText(minutes+"");
-            mSecondsEditText.setText(seconds+"");
+            mMinutesEditText.setText(minutes + "");
+            mSecondsEditText.setText(seconds + "");
             mExtractionSpinner.setSelection(extraction);
             mShowDate.setText(date);
         }

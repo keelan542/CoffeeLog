@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.keelan542.coffeelog.MainActivity">
+    tools:context="com.keelanbyrne.keelan542.coffeelog.MainActivity">
 
     <ListView
         android:id="@+id/list"

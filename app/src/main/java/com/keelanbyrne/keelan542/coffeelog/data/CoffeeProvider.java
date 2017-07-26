@@ -1,4 +1,4 @@
-package com.example.keelan542.coffeelog.data;
+package com.keelanbyrne.keelan542.coffeelog.data;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
+import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 import static android.R.attr.id;
 

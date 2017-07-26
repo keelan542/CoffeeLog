@@ -1,4 +1,4 @@
-package com.example.keelan542.coffeelog;
+package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

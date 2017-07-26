@@ -1,4 +1,4 @@
-package com.example.keelan542.coffeelog;
+package com.keelanbyrne.keelan542.coffeelog;
 
 import android.text.InputFilter;
 import android.text.Spanned;

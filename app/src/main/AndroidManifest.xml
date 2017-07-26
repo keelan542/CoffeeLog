@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.keelan542.coffeelog">
+    package="com.keelanbyrne.keelan542.coffeelog">
 
     <application
         android:allowBackup="true"
@@ -16,9 +16,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditorActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.android.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
         <provider
-            android:authorities="com.example.keelan542.coffeelog"
+            android:authorities="com.keelanbyrne.keelan542.coffeelog"
             android:name=".data.CoffeeProvider"
             android:exported="false"/>
     </application>

@@ -1,10 +1,10 @@
-package com.example.keelan542.coffeelog.data;
+package com.keelanbyrne.keelan542.coffeelog.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
+import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 /**
  * Created by keelan542 on 18/07/2017.

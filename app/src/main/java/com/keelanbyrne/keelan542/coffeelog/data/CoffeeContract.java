@@ -1,4 +1,4 @@
-package com.example.keelan542.coffeelog.data;
+package com.keelanbyrne.keelan542.coffeelog.data;
 
 import android.content.ContentResolver;
 import android.net.Uri;
@@ -13,7 +13,7 @@ public class CoffeeContract {
     // To prevent accidental instantiation of contract class
     private CoffeeContract() {}
 
-    public static final String CONTENT_AUTHORITY = "com.example.keelan542.coffeelog";
+    public static final String CONTENT_AUTHORITY = "com.keelanbyrne.keelan542.coffeelog";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_COFFEE = "coffee";
 

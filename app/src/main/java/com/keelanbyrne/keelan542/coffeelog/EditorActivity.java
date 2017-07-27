@@ -132,13 +132,10 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mRatioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String coffeeUsedString = mCoffeeUsedEditText.getText().toString().trim();
-                String yieldString = mYieldEditText.getText().toString().trim();
-                if (!TextUtils.isEmpty(coffeeUsedString) && !TextUtils.isEmpty(yieldString)) {
-                    double coffeeUsed = Double.parseDouble(coffeeUsedString);
-                    double yield = Double.parseDouble(yieldString);
-                    mRatio = String.valueOf(Math.round((yield / coffeeUsed) * 100.0) / 100.0);
-                    mShowRatio.setText("1:" + mRatio);
+                String coffeeUsed = mCoffeeUsedEditText.getText().toString().trim();
+                String yield = mYieldEditText.getText().toString().trim();
+                if (!TextUtils.isEmpty(coffeeUsed) && !TextUtils.isEmpty(yield)) {
+                    setRatio(coffeeUsed, yield);
                 }
             }
         });
@@ -383,13 +380,8 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
             // Set mRatio if mCurrentEntryUri is not null
             // as button may not have been clicked
-            if (mCurrentEntryUri != null) {
-                if (!TextUtils.isEmpty(mCoffeeUsedEditText.getText().toString()) && !TextUtils.isEmpty(mYieldEditText.getText().toString())) {
-                    double coffeeUsedDouble = Double.parseDouble(mCoffeeUsedEditText.getText().toString());
-                    double yieldDouble = Double.parseDouble(mYieldEditText.getText().toString());
-                    mRatio = String.valueOf(Math.round((yieldDouble / coffeeUsedDouble) * 100.0) / 100.0);
-                    mShowRatio.setText("1:" + mRatio);
-                }
+            if (!TextUtils.isEmpty(coffeeUsed) && !TextUtils.isEmpty(yield)) {
+                setRatio(coffeeUsed, yield);
             }
 
             // Insert data into values
@@ -457,6 +449,14 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     private void setDate(final Calendar calendar) {
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
         mShowDate.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    // Method to calculate and return ratio
+    private void setRatio(String coffeeUsed, String yield) {
+        double coffeeUsedDouble = Double.parseDouble(coffeeUsed);
+        double yieldDouble = Double.parseDouble(yield);
+        mRatio = String.valueOf(Math.round((yieldDouble / coffeeUsedDouble) * 100.0) / 100.0);
+        mShowRatio.setText("1:" + mRatio);
     }
 
     @Override

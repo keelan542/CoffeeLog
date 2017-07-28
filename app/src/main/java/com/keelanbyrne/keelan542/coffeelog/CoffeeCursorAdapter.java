@@ -32,12 +32,14 @@ public class CoffeeCursorAdapter extends CursorAdapter {
         TextView method = (TextView) view.findViewById(R.id.method);
         TextView date = (TextView) view.findViewById(R.id.date);
         TextView extraction = (TextView) view.findViewById(R.id.extraction);
+        TextView ratio = (TextView) view.findViewById(R.id.ratio);
 
         // Get required values from cursor object
         int methodNumber = cursor.getInt(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_METHOD));
         String methodString = "";
         String dateString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_DATE));
         String extractionString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_EXTRACTION));
+        String ratioString = cursor.getString(cursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_RATIO));
         int extractionNumber = Integer.parseInt(extractionString);
         switch (extractionNumber) {
             case 0:
@@ -70,5 +72,6 @@ public class CoffeeCursorAdapter extends CursorAdapter {
         method.setText(methodString);
         date.setText(dateString);
         extraction.setText(extractionString);
+        ratio.setText("Ratio - 1:" + ratioString);
     }
 }

@@ -92,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 CoffeeEntry._ID,
                 CoffeeEntry.COLUMN_LOG_METHOD,
                 CoffeeEntry.COLUMN_LOG_DATE,
-                CoffeeEntry.COLUMN_LOG_EXTRACTION};
+                CoffeeEntry.COLUMN_LOG_EXTRACTION,
+                CoffeeEntry.COLUMN_LOG_RATIO};
 
         return new CursorLoader(this,
                 baseUri,

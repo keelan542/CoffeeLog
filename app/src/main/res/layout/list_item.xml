@@ -14,13 +14,13 @@
             android:id="@+id/method_image"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            tools:src="@drawable/ic_pour_over"/>
+            tools:src="@drawable/ic_pour_over" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:layout_gravity="center_vertical"
+            android:layout_margin="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -30,7 +30,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@android:color/black"
-                tools:text="French Press" />
+                tools:text="Aeropress" />
 
             <TextView
                 android:id="@+id/date"
@@ -45,28 +45,22 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
-        android:layout_centerVertical="true">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/extraction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
+            style="@style/list_item_extraction_ratio_textview"
             android:layout_marginBottom="5dp"
-            android:textAppearance="?android:textAppearanceSmall"
-            tools:text="Balanced" />
+            tools:text="Underextracted" />
 
         <TextView
             android:id="@+id/ratio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textAppearance="?android:textAppearanceSmall"
+            style="@style/list_item_extraction_ratio_textview"
             tools:text="Ratio - 1:16.0" />
 
     </LinearLayout>

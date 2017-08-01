@@ -7,8 +7,8 @@ android {
         applicationId "com.keelanbyrne.keelan542.coffeelog"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 7
-        versionName "5.2"
+        versionCode 8
+        versionName "5.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

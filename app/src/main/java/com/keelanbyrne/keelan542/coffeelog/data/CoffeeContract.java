@@ -41,6 +41,7 @@ public class CoffeeContract {
         public static final String COLUMN_LOG_TIME = "time";
         public static final String COLUMN_LOG_EXTRACTION = "extraction";
         public static final String COLUMN_LOG_DATE = "date";
+        public static final String COLUMN_LOG_COMMENT = "comment";
 
         // Different integer values for extraction
         public static final int EXTRACTION_UNDER = 0;

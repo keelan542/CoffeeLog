@@ -19,6 +19,8 @@
     <string name="ratio_view_label">Ratio</string>
     <string name="ratio_button">Calculate</string>
     <string name="pick_date_button">Pick date</string>
+    <string name="comment_edit_label">Comments</string>
+    <string name="comment_edit_hint">Your comments here</string>
 
     <!-- Menu bar strings -->
     <string name="delete_entry_button">Delete entry</string>

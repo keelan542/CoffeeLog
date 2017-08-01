@@ -59,6 +59,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // Seconds edit text
     private EditText mSecondsEditText;
 
+    // Comments edit text
+    private EditText mCommentsEditText;
+
     // Ratio button
     private Button mRatioButton;
 
@@ -103,6 +106,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mExtractionSpinner = (Spinner) findViewById(R.id.extraction_spinner);
         mCoffeeUsedEditText = (EditText) findViewById(R.id.coffee_used_edit_text);
         mYieldEditText = (EditText) findViewById(R.id.water_used_edit_text);
+        mCommentsEditText = (EditText) findViewById(R.id.comment_edit_text);
 
         // Get references to minutes and seconds edit fields and set custom filter
         mMinutesEditText = (EditText) findViewById(R.id.time_mins_edit_text);
@@ -125,6 +129,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mMinutesEditText.setOnTouchListener(mTouchListener);
         mSecondsEditText.setOnTouchListener(mTouchListener);
         mDateButton.setOnTouchListener(mTouchListener);
+        mCommentsEditText.setOnTouchListener(mTouchListener);
 
         setupSpinners();
 
@@ -357,6 +362,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         String yield = mYieldEditText.getText().toString().trim();
         String minutesString = mMinutesEditText.getText().toString().trim();
         String secondsString = mSecondsEditText.getText().toString().trim();
+        String comments = mCommentsEditText.getText().toString().trim();
 
         // Check if fields empty and if so
         // show a Toast rather than proceed
@@ -392,6 +398,11 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             values.put(CoffeeEntry.COLUMN_LOG_TIME, timeString);
             values.put(CoffeeEntry.COLUMN_LOG_EXTRACTION, mExtraction);
             values.put(CoffeeEntry.COLUMN_LOG_DATE, date);
+
+            // Add comments to values if not empty
+            if (!TextUtils.isEmpty(comments)) {
+                values.put(CoffeeEntry.COLUMN_LOG_COMMENT, comments);
+            }
 
             if (mCurrentEntryUri == null) {
                 // Insert values into coffee_log database
@@ -471,7 +482,8 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 CoffeeEntry.COLUMN_LOG_RATIO,
                 CoffeeEntry.COLUMN_LOG_TIME,
                 CoffeeEntry.COLUMN_LOG_EXTRACTION,
-                CoffeeEntry.COLUMN_LOG_DATE};
+                CoffeeEntry.COLUMN_LOG_DATE,
+                CoffeeEntry.COLUMN_LOG_COMMENT};
 
         return new CursorLoader(this,
                 mCurrentEntryUri,
@@ -496,6 +508,11 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             String timeString = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_TIME));
             int extraction = data.getInt(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_EXTRACTION));
             String date = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_DATE));
+            String comments;
+            if (!TextUtils.isEmpty((data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_COMMENT))))) {
+                comments = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_COMMENT));
+                mCommentsEditText.setText(comments);
+            }
 
             // Seperate timeString into minutes and seconds
             int minutes = Integer.parseInt(timeString) / 60;
@@ -522,5 +539,6 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mMinutesEditText.getText().clear();
         mSecondsEditText.getText().clear();
         mShowDate.setText("");
+        mCommentsEditText.setText("");
     }
 }

@@ -42,7 +42,7 @@
     </string-array>
 
     <!-- Message if edit fields empty -->
-    <string name="fields_empty">Must fill out all fields</string>
+    <string name="date_not_picked">Must pick a date.</string>
 
     <!-- Message to display if insertion successful or not -->
     <string name="insertion_successful">Saved entry</string>
@@ -70,4 +70,7 @@
 
     <!-- Empty text -->
     <string name="empty_view">Click the plus button to make your  first entry!</string>
+
+    <!-- Blank field error message -->
+    <string name="blank_field_error_message">Field cannot be blank</string>
 </resources>

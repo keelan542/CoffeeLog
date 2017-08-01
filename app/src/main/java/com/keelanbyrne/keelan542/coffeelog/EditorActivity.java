@@ -364,15 +364,18 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         String secondsString = mSecondsEditText.getText().toString().trim();
         String comments = mCommentsEditText.getText().toString().trim();
 
-        // Check if fields empty and if so
-        // show a Toast rather than proceed
-        if (TextUtils.isEmpty(coffeeUsed) ||
-                TextUtils.isEmpty(yield) ||
-                TextUtils.isEmpty(minutesString) ||
-                TextUtils.isEmpty(secondsString) ||
-                TextUtils.isEmpty(mShowDate.getText().toString())) {
-
-            Toast.makeText(this, getString(R.string.fields_empty), Toast.LENGTH_SHORT).show();
+        // Check if fields empty and if so show a Toast rather than proceed
+        // or show error on edit text fields
+        if (TextUtils.isEmpty(coffeeUsed)) {
+            mCoffeeUsedEditText.setError(getString(R.string.blank_field_error_message));
+        }else if (TextUtils.isEmpty(yield)) {
+            mYieldEditText.setError(getString(R.string.blank_field_error_message));
+        } else if (TextUtils.isEmpty(minutesString)) {
+            mMinutesEditText.setError(getString(R.string.blank_field_error_message));
+        } else if (TextUtils.isEmpty(secondsString)) {
+            mSecondsEditText.setError(getString(R.string.blank_field_error_message));
+        } else if (TextUtils.isEmpty(mShowDate.getText().toString())) {
+            Toast.makeText(this, getString(R.string.date_not_picked), Toast.LENGTH_SHORT).show();
         } else {
             // Convert time into total seconds and store in string
             int minutes = Integer.parseInt(minutesString);

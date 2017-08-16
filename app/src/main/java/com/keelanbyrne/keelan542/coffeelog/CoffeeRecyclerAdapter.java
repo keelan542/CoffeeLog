@@ -17,6 +17,7 @@ import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAdapter.CustomViewHolder> {
 
+    // Fields
     private Context mContext;
     private Cursor mCursor;
 
@@ -35,6 +36,8 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
 
+        // Move cursor to position in holder and return
+        // early if null
         if (!mCursor.moveToPosition(position))
             return;
 
@@ -90,6 +93,7 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
 
+        // Get references to views of list item
         TextView method;
         TextView date;
         TextView extraction;
@@ -98,6 +102,7 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
         CustomViewHolder(View itemView) {
             super(itemView);
+            
             // Get references to required views in list_item.xml
             method = (TextView) itemView.findViewById(R.id.method);
             date = (TextView) itemView.findViewById(R.id.date);

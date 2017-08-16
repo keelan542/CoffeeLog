@@ -27,9 +27,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // RecyclerView adapter
     private CoffeeRecyclerAdapter mRecyclerAdapter;
 
-    // Cursor adapter
-    private CoffeeCursorAdapter mAdapter;
-
     // Current entry uri
     private Uri mCurrentEntryUri;
 
@@ -58,16 +55,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Find RecyclerView and set layout manager
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        // Find listView and set empty view
-        //ListView listView = (ListView) findViewById(R.id.list);
-        //listView.setEmptyView(mEmptyView);
-
-        // Create instance of CoffeeCursorAdapter
-       // mAdapter = new CoffeeCursorAdapter(this, null);
-
-        // Set adapter on listView
-        //listView.setAdapter(mAdapter);
 
         /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -129,9 +116,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        // Called when last Cursor provided to onLoadFinished()
-        // is about to be closed
-        //mAdapter.swapCursor(null);
-    }
+    public void onLoaderReset(Loader<Cursor> loader) {}
 }

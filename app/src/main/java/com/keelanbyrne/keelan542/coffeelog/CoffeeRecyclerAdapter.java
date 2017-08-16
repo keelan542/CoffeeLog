@@ -1,5 +1,7 @@
 package com.keelanbyrne.keelan542.coffeelog;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,14 @@ import android.view.ViewGroup;
  */
 
 public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAdapter.CustomViewHolder> {
+
+    private Context mContext;
+    private Cursor mCursor;
+
+    CoffeeRecyclerAdapter(Context context, Cursor cursor) {
+        mContext = context;
+        mCursor = cursor;
+    }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -3,6 +3,7 @@ package com.keelanbyrne.keelan542.coffeelog;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,12 +23,14 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
+        CustomViewHolder customViewHolder = new CustomViewHolder(view);
+        return customViewHolder;
     }
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-
+        
     }
 
     @Override

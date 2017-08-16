@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onListItemClick(View view, int position) {
 
         // Form content uri with appended id of entry that was clicked on
+        // TODO: Fix not being able to get id of clicked entry
         mCurrentEntryUri = ContentUris.withAppendedId(CoffeeEntry.CONTENT_URI, mRecyclerAdapter.getItemId(position));
 
         // Create new intent to got to EditorActivity

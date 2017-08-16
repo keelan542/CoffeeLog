@@ -34,6 +34,10 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
+
+        if (!mCursor.moveToPosition(position))
+            return;
+
         // Get required values from cursor object
         int methodNumber = mCursor.getInt(mCursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_METHOD));
         String methodString = "";

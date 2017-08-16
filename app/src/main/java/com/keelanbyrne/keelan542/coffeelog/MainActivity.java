@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Get reference to emtpy view
         mEmptyView = (TextView) findViewById(R.id.empty_view);
+        mEmptyView.setVisibility(View.VISIBLE);
 
         // Find RecyclerView and set layout manager
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
@@ -116,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+        // Make empty view invisible
+        mEmptyView.setVisibility(View.INVISIBLE);
+
         // Create instance of CoffeeRecyclerAdapter
         mRecyclerAdapter = new CoffeeRecyclerAdapter(this, data);
 

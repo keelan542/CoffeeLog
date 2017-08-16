@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.keelanbyrne.keelan542.coffeelog.MainActivity">
 
-    <ListView
-        android:id="@+id/list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
     <TextView
         android:id="@+id/empty_view"

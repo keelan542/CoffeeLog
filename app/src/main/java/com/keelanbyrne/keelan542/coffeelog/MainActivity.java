@@ -1,6 +1,7 @@
 package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 
 import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CoffeeRecyclerAdapter.OnItemClickListener {
 
     // Loader id
     private static final int LOADER_ID = 1;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Emtpy view
     private TextView mEmptyView;
+
+    // Cursor
+    private Cursor mCursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
+        mCursor = data;
+
         // Make empty view invisible
         mEmptyView.setVisibility(View.INVISIBLE);
 
@@ -113,8 +119,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Set adapter on recycler view
         mRecyclerView.setAdapter(mRecyclerAdapter);
+
+        // Set click listener on adapter
+        mRecyclerAdapter.setItemClickListener(this);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {}
+
+    @Override
+    public void onListItemClick(View view, int position) {
+
+        // Form content uri with appended id of entry that was clicked on
+        mCurrentEntryUri = ContentUris.withAppendedId(CoffeeEntry.CONTENT_URI, mRecyclerAdapter.getItemId(position));
+
+        // Create new intent to got to EditorActivity
+        Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+
+        // Set mCurrentEntryUri as data of intent
+        intent.setData(mCurrentEntryUri);
+
+        // Launch Editor activity to display data of selected entry
+        startActivity(intent);
+    }
 }

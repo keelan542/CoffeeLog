@@ -100,16 +100,21 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
         return mCursor.getCount();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Get references to views of list item
-        TextView method;
-        TextView date;
-        TextView extraction;
-        TextView ratio;
-        ImageView methodImage;
+        private TextView method;
+        private TextView date;
+        private TextView extraction;
+        private TextView ratio;
+        private ImageView methodImage;
 
-        CustomViewHolder(View itemView) {
+        public CustomViewHolder(View itemView) {
             super(itemView);
 
             // Get references to required views in list_item.xml
@@ -118,6 +123,7 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
             extraction = (TextView) itemView.findViewById(R.id.extraction);
             ratio = (TextView) itemView.findViewById(R.id.ratio);
             methodImage = (ImageView) itemView.findViewById(R.id.method_image);
+            itemView.setOnClickListener(this);
         }
 
         @Override

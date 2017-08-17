@@ -92,8 +92,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mCursor = data;
 
-        // Make empty view invisible
-        mEmptyView.setVisibility(View.INVISIBLE);
+        // Make empty view invisible if no data
+        if (data.getCount() == 0) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyView.setVisibility(View.INVISIBLE);
+        }
 
         // Create instance of CoffeeRecyclerAdapter
         mRecyclerAdapter = new CoffeeRecyclerAdapter(this, data);

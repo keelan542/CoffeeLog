@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:orientation="horizontal">
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
+        android:id="@+id/left_pane"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -66,5 +66,11 @@
             tools:text="Ratio - 1:16.0" />
 
     </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/left_pane"/>
 
 </RelativeLayout>

@@ -60,25 +60,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        /*
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Form content uri with appended id of entry that was clicked on
-                mCurrentEntryUri = ContentUris.withAppendedId(CoffeeEntry.CONTENT_URI, id);
-
-                // Create new intent to got to EditorActivity
-                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-
-                // Set mCurrentEntryUri as data of intent
-                intent.setData(mCurrentEntryUri);
-
-                // Launch Editor activity to display data of selected entry
-                startActivity(intent);
-            }
-        });
-        */
-
         // Initialise loader
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
@@ -130,9 +111,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onListItemClick(View view, int position) {
 
+        mCursor.moveToPosition(position);
+
         // Form content uri with appended id of entry that was clicked on
-        // TODO: Fix not being able to get id of clicked entry
-        mCurrentEntryUri = ContentUris.withAppendedId(CoffeeEntry.CONTENT_URI, mRecyclerAdapter.getItemId(position));
+        mCurrentEntryUri = ContentUris.withAppendedId(CoffeeEntry.CONTENT_URI, mCursor.getInt(mCursor.getColumnIndex(CoffeeEntry._ID)));
 
         // Create new intent to got to EditorActivity
         Intent intent = new Intent(MainActivity.this, EditorActivity.class);

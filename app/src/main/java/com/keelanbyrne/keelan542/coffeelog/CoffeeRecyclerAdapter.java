@@ -100,18 +100,6 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
         return mCursor.getCount();
     }
 
-    public void swapCursor(Cursor cursor) {
-        if (cursor != null) {
-            cursor.close();
-        }
-
-        mCursor = cursor;
-
-        if (mCursor != null) {
-            this.notifyDataSetChanged();
-        }
-    }
-
     @Override
     public long getItemId(int position) {
         return super.getItemId(position);

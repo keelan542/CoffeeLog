@@ -40,7 +40,7 @@ public class CoffeeSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String UPDATE_COFFEE_LOG_TABLE = "ALTER TABLE " + CoffeeEntry.TABLE_NAME + " ADD COLUMN " + CoffeeEntry.COLUMN_LOG_COMMENT + " TEXT;";
-        if (newVersion > oldVersion) {
+        if (oldVersion < 2) {
             db.execSQL(UPDATE_COFFEE_LOG_TABLE);
             Log.v("Tag: ", "Table updated");
         }

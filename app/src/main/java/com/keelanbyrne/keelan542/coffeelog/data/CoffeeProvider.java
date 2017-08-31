@@ -35,7 +35,7 @@ public class CoffeeProvider extends ContentProvider {
     // Input passed into the constructor represents the code to return for the root uri
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-    /// Static initialiser. This is called the first time anything is run from this class
+    // Static initialiser. This is called the first time anything is run from this class
     static {
         // Content uri patterns that the provider should recognise
         sUriMatcher.addURI(CoffeeContract.CONTENT_AUTHORITY, CoffeeContract.PATH_COFFEE, COFFEE);

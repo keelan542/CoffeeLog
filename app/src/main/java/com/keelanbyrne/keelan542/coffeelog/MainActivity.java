@@ -58,7 +58,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Find RecyclerView and set layout manager
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        linearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
         // Initialise loader
         getLoaderManager().initLoader(LOADER_ID, null, this);

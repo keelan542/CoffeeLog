@@ -44,7 +44,6 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-
         // Move cursor to position in holder and return
         // early if null
         if (!mCursor.moveToPosition(position))
@@ -92,7 +91,7 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
         holder.method.setText(methodString);
         holder.date.setText(dateString);
         holder.extraction.setText(extractionString);
-        holder.ratio.setText("Ratio - 1:" + ratioString);
+        holder.ratio.setText(mContext.getString(R.string.ratio_text) + ratioString);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.keelanbyrne.keelan542.coffeelog.data;
 
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -15,7 +16,7 @@ public class CoffeeSQLiteOpenHelper extends SQLiteOpenHelper {
 
     // Name and version of the database
     public static final String DATABASE_NAME = "coffee.db";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 8;
 
     public CoffeeSQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,15 +35,21 @@ public class CoffeeSQLiteOpenHelper extends SQLiteOpenHelper {
                 + CoffeeEntry.COLUMN_LOG_EXTRACTION + " INTEGER NOT NULL, "
                 + CoffeeEntry.COLUMN_LOG_DATE + " TEXT NOT NULL);";
 
+        String UPDATE_COFFEE_LOG_TABLE = "ALTER TABLE " + CoffeeEntry.TABLE_NAME + " ADD COLUMN " + CoffeeEntry.COLUMN_LOG_COMMENT + " TEXT;";
+
         db.execSQL(CREATE_COFFEE_LOG_TABLE);
+        db.execSQL(UPDATE_COFFEE_LOG_TABLE);
+
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String UPDATE_COFFEE_LOG_TABLE = "ALTER TABLE " + CoffeeEntry.TABLE_NAME + " ADD COLUMN " + CoffeeEntry.COLUMN_LOG_COMMENT + " TEXT;";
-        if (oldVersion < 2) {
+        try {
             db.execSQL(UPDATE_COFFEE_LOG_TABLE);
-            Log.v("Tag: ", "Table updated");
+        } catch (SQLException e)  {
+            Log.e("Tag: ", "Column already exists");
         }
     }
 }

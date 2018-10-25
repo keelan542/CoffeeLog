@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        // Get reference to emtpy view
+        // Get reference to empty view
         mEmptyView = (TextView) findViewById(R.id.empty_view);
         mEmptyView.setVisibility(View.VISIBLE);
 
@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
         // Create base uri
         Uri baseUri = CoffeeEntry.CONTENT_URI;
 
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mCursor = data;
 
-        // Make empty view invisible if no data
+        // Make empty view visible if no data
         if (data.getCount() == 0) {
             mEmptyView.setVisibility(View.VISIBLE);
         } else {

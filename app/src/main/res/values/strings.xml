@@ -73,4 +73,5 @@
 
     <!-- Blank field error message -->
     <string name="blank_field_error_message">Field cannot be blank</string>
+    <string name="ratio_text">Ratio - 1:</string>
 </resources>

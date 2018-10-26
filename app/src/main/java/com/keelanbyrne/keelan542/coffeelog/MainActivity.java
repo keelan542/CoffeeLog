@@ -19,6 +19,8 @@ import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CoffeeRecyclerAdapter.OnItemClickListener {
 
+    public static final int NEW_COFFEE_ACTIVITY_REQUEST_CODE = 1;
+
     // Loader id
     private static final int LOADER_ID = 1;
 
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, NEW_COFFEE_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -64,6 +66,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Initialise loader
         getLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == NEW_COFFEE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Coffee coffee = (Coffee) data.getSerializableExtra(EditorActivity.EXTRA_REPLY);
+
+        }
     }
 
     @Override

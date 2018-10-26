@@ -6,6 +6,7 @@ import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -29,11 +30,14 @@ import android.widget.Toast;
 
 import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, LoaderManager.LoaderCallbacks<Cursor> {
+
+    public static final String EXTRA_REPLY = "com.example.android.coffeelistsql.REPLY";
 
     // Method spinner
     private Spinner mMethodSpinner;
@@ -393,6 +397,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 setRatio(coffeeUsed, yield);
             }
 
+            /*
             // Insert data into values
             values.put(CoffeeEntry.COLUMN_LOG_METHOD, mMethod);
             values.put(CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT, coffeeUsed);
@@ -401,12 +406,20 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             values.put(CoffeeEntry.COLUMN_LOG_TIME, timeString);
             values.put(CoffeeEntry.COLUMN_LOG_EXTRACTION, mExtraction);
             values.put(CoffeeEntry.COLUMN_LOG_DATE, date);
+            */
 
             // Add comments to values if not empty
             if (!TextUtils.isEmpty(comments)) {
-                values.put(CoffeeEntry.COLUMN_LOG_COMMENT, comments);
+                comments = "";
             }
 
+            Coffee coffee = new Coffee(mMethod, coffeeUsed, yield, mRatio, timeString, mExtraction, date, comments);
+            Intent replyIntent = new Intent();
+            replyIntent.putExtra(EXTRA_REPLY, (Serializable) coffee);
+            setResult(RESULT_OK, replyIntent);
+
+
+            /*
             if (mCurrentEntryUri == null) {
                 // Insert values into coffee_log database
                 Uri uri = getContentResolver().insert(CoffeeEntry.CONTENT_URI, values);
@@ -428,6 +441,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                     Toast.makeText(this, getString(R.string.update_failed), Toast.LENGTH_SHORT).show();
                 }
             }
+            */
 
             finish();
         }

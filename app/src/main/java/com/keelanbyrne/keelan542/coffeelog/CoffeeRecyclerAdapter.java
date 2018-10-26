@@ -11,11 +11,15 @@ import android.widget.TextView;
 
 import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
+import java.util.List;
+
 /**
  * Created by keelan542 on 16/08/2017.
  */
 
 public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAdapter.CustomViewHolder> {
+
+    private List<Coffee> coffees; // cached copy of coffee logs
 
     // Fields
     private Context mContext;
@@ -94,9 +98,18 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
         holder.ratio.setText(mContext.getString(R.string.ratio_text) + ratioString);
     }
 
+    void setCoffees(List<Coffee> coffees) {
+        this.coffees = coffees;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
-        return mCursor.getCount();
+        if (coffees != null) {
+            return coffees.size();
+        } else {
+            return 0;
+        }
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,59 +31,59 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     public static final String EXTRA_REPLY = "com.example.android.coffeelistsql.REPLY";
 
     // Method spinner
-    private Spinner mMethodSpinner;
+    private Spinner methodSpinner;
 
     // Extraction spinner
-    private Spinner mExtractionSpinner;
+    private Spinner extractionSpinner;
 
     // Extraction value
-    private int mExtraction = 0;
+    private int extraction = 0;
 
     // Method value
-    private int mMethod = 0;
+    private int method = 0;
 
     // Coffee used edit text
-    private EditText mCoffeeUsedEditText;
+    private EditText coffeeUsedEditText;
 
     // Yield edit text
-    private EditText mYieldEditText;
+    private EditText yieldEditText;
 
     // Minutes edit text
-    private EditText mMinutesEditText;
+    private EditText minutesEditText;
 
     // Seconds edit text
-    private EditText mSecondsEditText;
+    private EditText secondsEditText;
 
     // Comments edit text
-    private EditText mCommentsEditText;
+    private EditText commentsEditText;
 
     // Ratio button
-    private Button mRatioButton;
+    private Button ratioButton;
 
     // Date button
-    private Button mDateButton;
+    private Button dateButton;
 
     // String to sore ratio
-    private String mRatio;
+    private String ratio;
 
     // TextView to display date
-    private TextView mShowDate;
+    private TextView showDate;
 
     // TextView to display ratio
-    private TextView mShowRatio;
+    private TextView showRatio;
 
     // Current entry uri
     private int itemClickedId;
 
     // Boolean to check whether entry has
     // been edited, and if so, trigger AlertDialog.
-    private boolean mEntryHasChanged;
+    private boolean entryHasChanged;
 
     // Touch listener to check whether product has been edited
-    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+    private View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            mEntryHasChanged = true;
+            entryHasChanged = true;
             return false;
         }
     };
@@ -95,43 +94,43 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.activity_editor);
 
         // Get references to edit fields
-        mMethodSpinner = (Spinner) findViewById(R.id.method_spinner);
-        mExtractionSpinner = (Spinner) findViewById(R.id.extraction_spinner);
-        mCoffeeUsedEditText = (EditText) findViewById(R.id.coffee_used_edit_text);
-        mYieldEditText = (EditText) findViewById(R.id.water_used_edit_text);
-        mCommentsEditText = (EditText) findViewById(R.id.comment_edit_text);
+        methodSpinner = (Spinner) findViewById(R.id.method_spinner);
+        extractionSpinner = (Spinner) findViewById(R.id.extraction_spinner);
+        coffeeUsedEditText = (EditText) findViewById(R.id.coffee_used_edit_text);
+        yieldEditText = (EditText) findViewById(R.id.water_used_edit_text);
+        commentsEditText = (EditText) findViewById(R.id.comment_edit_text);
 
         // Get references to minutes and seconds edit fields and set custom filter
-        mMinutesEditText = (EditText) findViewById(R.id.time_mins_edit_text);
-        mMinutesEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", "1000")});
-        mSecondsEditText = (EditText) findViewById(R.id.time_sec_edit_text);
-        mSecondsEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
+        minutesEditText = (EditText) findViewById(R.id.time_mins_edit_text);
+        minutesEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", "1000")});
+        secondsEditText = (EditText) findViewById(R.id.time_sec_edit_text);
+        secondsEditText.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
 
         // Get reference to TextViews and buttons that shows the selected date and ratio
-        mShowDate = (TextView) findViewById(R.id.show_date);
-        mShowRatio = (TextView) findViewById(R.id.show_ratio);
-        mDateButton = (Button) findViewById(R.id.pick_date_button);
-        mRatioButton = (Button) findViewById(R.id.show_ratio_button);
+        showDate = (TextView) findViewById(R.id.show_date);
+        showRatio = (TextView) findViewById(R.id.show_ratio);
+        dateButton = (Button) findViewById(R.id.pick_date_button);
+        ratioButton = (Button) findViewById(R.id.show_ratio_button);
 
-        // Set mTouchListener on edit fields
-        mMethodSpinner.setOnTouchListener(mTouchListener);
-        mExtractionSpinner.setOnTouchListener(mTouchListener);
-        mCoffeeUsedEditText.setOnTouchListener(mTouchListener);
-        mYieldEditText.setOnTouchListener(mTouchListener);
-        mRatioButton.setOnTouchListener(mTouchListener);
-        mMinutesEditText.setOnTouchListener(mTouchListener);
-        mSecondsEditText.setOnTouchListener(mTouchListener);
-        mDateButton.setOnTouchListener(mTouchListener);
-        mCommentsEditText.setOnTouchListener(mTouchListener);
+        // Set touchListener on edit fields
+        methodSpinner.setOnTouchListener(touchListener);
+        extractionSpinner.setOnTouchListener(touchListener);
+        coffeeUsedEditText.setOnTouchListener(touchListener);
+        yieldEditText.setOnTouchListener(touchListener);
+        ratioButton.setOnTouchListener(touchListener);
+        minutesEditText.setOnTouchListener(touchListener);
+        secondsEditText.setOnTouchListener(touchListener);
+        dateButton.setOnTouchListener(touchListener);
+        commentsEditText.setOnTouchListener(touchListener);
 
         setupSpinners();
 
         // Setup Calculate button to show ratio of brew
-        mRatioButton.setOnClickListener(new View.OnClickListener() {
+        ratioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String coffeeUsed = mCoffeeUsedEditText.getText().toString().trim();
-                String yield = mYieldEditText.getText().toString().trim();
+                String coffeeUsed = coffeeUsedEditText.getText().toString().trim();
+                String yield = yieldEditText.getText().toString().trim();
                 if (!TextUtils.isEmpty(coffeeUsed) && !TextUtils.isEmpty(yield)) {
                     setRatio(coffeeUsed, yield);
                 }
@@ -185,7 +184,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             case android.R.id.home:
                 // If the product hasnt changed, continue navigating
                 // up to the parent activity
-                if (!mEntryHasChanged) {
+                if (!entryHasChanged) {
                     NavUtils.navigateUpFromSameTask(EditorActivity.this);
                     return true;
                 }
@@ -212,7 +211,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     @Override
     public void onBackPressed() {
         // If the pet hasn't changed, continue with handling back button press
-        if (!mEntryHasChanged) {
+        if (!entryHasChanged) {
             super.onBackPressed();
             return;
         }
@@ -293,34 +292,32 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         adapterExtraction.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         // Apply adapters to spinners
-        mMethodSpinner.setAdapter(adapterMethod);
-        mExtractionSpinner.setAdapter(adapterExtraction);
+        methodSpinner.setAdapter(adapterMethod);
+        extractionSpinner.setAdapter(adapterExtraction);
 
-        // Set mExtraction to selection in mExtractionSpinner
-        mExtractionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Set extraction to selection in extractionSpinner
+        extractionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
                 String[] array = getResources().getStringArray(R.array.extraction_options);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(array[0])) {
-                        mExtraction = 0;
+                        extraction = 0;
                     } else if (selection.equals(array[1])) {
-                        mExtraction = 1;
+                        extraction = 1;
                     } else {
-                        mExtraction = 2;
+                        extraction = 2;
                     }
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Set mMethod to selection in mMethodSpinner
-        mMethodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Set method to selection in methodSpinner
+        methodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -328,57 +325,53 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 String[] array = getResources().getStringArray(R.array.method_options);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(array[0])) {
-                        mMethod = 0;
+                        method = 0;
                     } else if (selection.equals(array[1])) {
-                        mMethod = 1;
+                        method = 1;
                     } else if (selection.equals(array[2])) {
-                        mMethod = 2;
+                        method = 2;
                     } else {
-                        mMethod = 3;
+                        method = 3;
                     }
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
     public void saveEntry() {
 
         // Get text of edit fields and store in variables
-        String coffeeUsed = mCoffeeUsedEditText.getText().toString().trim();
-        String yield = mYieldEditText.getText().toString().trim();
-        String minutesString = mMinutesEditText.getText().toString().trim();
-        String secondsString = mSecondsEditText.getText().toString().trim();
-        String comments = mCommentsEditText.getText().toString().trim();
+        String coffeeUsed = coffeeUsedEditText.getText().toString().trim();
+        String yield = yieldEditText.getText().toString().trim();
+        String minutesString = minutesEditText.getText().toString().trim();
+        String secondsString = secondsEditText.getText().toString().trim();
+        String comments = commentsEditText.getText().toString().trim();
 
         // Check if fields empty and if so show a Toast rather than proceed
         // or show error on edit text fields
         if (TextUtils.isEmpty(coffeeUsed)) {
-            mCoffeeUsedEditText.setError(getString(R.string.blank_field_error_message));
+            coffeeUsedEditText.setError(getString(R.string.blank_field_error_message));
         }else if (TextUtils.isEmpty(yield)) {
-            mYieldEditText.setError(getString(R.string.blank_field_error_message));
+            yieldEditText.setError(getString(R.string.blank_field_error_message));
         } else if (TextUtils.isEmpty(minutesString)) {
-            mMinutesEditText.setError(getString(R.string.blank_field_error_message));
+            minutesEditText.setError(getString(R.string.blank_field_error_message));
         } else if (TextUtils.isEmpty(secondsString)) {
-            mSecondsEditText.setError(getString(R.string.blank_field_error_message));
-        } else if (TextUtils.isEmpty(mShowDate.getText().toString())) {
+            secondsEditText.setError(getString(R.string.blank_field_error_message));
+        } else if (TextUtils.isEmpty(showDate.getText().toString())) {
             Toast.makeText(this, getString(R.string.date_not_picked), Toast.LENGTH_SHORT).show();
         } else {
+
             // Convert time into total seconds and store in string
             int minutes = Integer.parseInt(minutesString);
             int seconds = Integer.parseInt(secondsString);
             int totalTimeInSeconds = (minutes * 60) + seconds;
             String timeString = String.valueOf(totalTimeInSeconds);
-            String date = mShowDate.getText().toString();
+            String date = showDate.getText().toString();
 
-            // New instance of ContentValues
-            ContentValues values = new ContentValues();
-
-            // Set mRatio if mCurrentEntryUri is not null
+            // Set ratio if mCurrentEntryUri is not null
             // as button may not have been clicked
             if (!TextUtils.isEmpty(coffeeUsed) && !TextUtils.isEmpty(yield)) {
                 setRatio(coffeeUsed, yield);
@@ -389,7 +382,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 comments = "";
             }
 
-            Coffee coffee = new Coffee(mMethod, coffeeUsed, yield, mRatio, timeString, mExtraction, date, comments);
+            Coffee coffee = new Coffee(method, coffeeUsed, yield, ratio, timeString, extraction, date, comments);
             Intent replyIntent = new Intent();
             replyIntent.putExtra(EXTRA_REPLY, coffee);
             setResult(RESULT_OK, replyIntent);
@@ -421,15 +414,15 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // Set selected date on TextView
     private void setDate(final Calendar calendar) {
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        mShowDate.setText(dateFormat.format(calendar.getTime()));
+        showDate.setText(dateFormat.format(calendar.getTime()));
     }
 
     // Method to calculate and return ratio
     private void setRatio(String coffeeUsed, String yield) {
         double coffeeUsedDouble = Double.parseDouble(coffeeUsed);
         double yieldDouble = Double.parseDouble(yield);
-        mRatio = String.valueOf(Math.round((yieldDouble / coffeeUsedDouble) * 100.0) / 100.0);
-        mShowRatio.setText("1:" + mRatio);
+        ratio = String.valueOf(Math.round((yieldDouble / coffeeUsedDouble) * 100.0) / 100.0);
+        showRatio.setText("1:" + ratio);
     }
 
     /*
@@ -451,7 +444,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             String comments;
             if (!TextUtils.isEmpty((data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_COMMENT))))) {
                 comments = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_COMMENT));
-                mCommentsEditText.setText(comments);
+                commentsEditText.setText(comments);
             }
 
             // Seperate timeString into minutes and seconds
@@ -459,14 +452,14 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             int seconds = Integer.parseInt(timeString) % 60;
 
             // Set values from cursor on fields
-            mMethodSpinner.setSelection(method);
-            mCoffeeUsedEditText.setText(coffeeUsed);
-            mYieldEditText.setText(yield);
-            mShowRatio.setText("1:" + ratio);
-            mMinutesEditText.setText(minutes + "");
-            mSecondsEditText.setText(seconds + "");
-            mExtractionSpinner.setSelection(extraction);
-            mShowDate.setText(date);
+            methodSpinner.setSelection(method);
+            coffeeUsedEditText.setText(coffeeUsed);
+            yieldEditText.setText(yield);
+            showRatio.setText("1:" + ratio);
+            minutesEditText.setText(minutes + "");
+            secondsEditText.setText(seconds + "");
+            extractionSpinner.setSelection(extraction);
+            showDate.setText(date);
         }
     }
     */

@@ -21,20 +21,40 @@ public class CoffeeRepository {
     }
 
     public void insert(Coffee coffee) {
-        new insertAsyncTask(coffeeDao).execute(coffee);
+        new insertAsyncTask(coffeeDao, 0).execute(coffee);
+    }
+
+    public void delete(Coffee coffee) {
+
     }
 
     private static class insertAsyncTask extends android.os.AsyncTask<Coffee, Void, Void> {
 
         private CoffeeDao coffeeDaoAsync;
+        private int operationCodeAsync;
 
-        insertAsyncTask(CoffeeDao dao) {
+        insertAsyncTask(CoffeeDao dao, int operationCode) {
             coffeeDaoAsync = dao;
+            operationCodeAsync = operationCode;
         }
 
         @Override
         protected Void doInBackground(Coffee... coffees) {
-            coffeeDaoAsync.insert(coffees[0]);
+            switch (operationCodeAsync) {
+                case 0:
+                    coffeeDaoAsync.insert(coffees[0]);
+                    break;
+                case 1:
+                    coffeeDaoAsync.delete(coffees[0]);
+                    break;
+                case 2:
+                    coffeeDaoAsync.update(coffees[0]);
+                    break;
+                case 3:
+                    coffeeDaoAsync.getAllCoffee();
+                    break;
+            }
+
             return null;
         }
     }

@@ -44,45 +44,47 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
 
-        Coffee coffee = coffees.get(position);
-        String extractionString = "";
-        switch (coffee.getExtraction()) {
-            case 0:
-                extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[0];
-                break;
-            case 1:
-                extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[1];
-                break;
-            case 2:
-                extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[2];
-                break;
-        }
+        if (coffees != null) {
+            Coffee coffee = coffees.get(position);
+            String extractionString = "";
+            switch (coffee.getExtraction()) {
+                case 0:
+                    extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[0];
+                    break;
+                case 1:
+                    extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[1];
+                    break;
+                case 2:
+                    extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[2];
+                    break;
+            }
 
-        String methodString = "";
-        switch (coffee.getMethod()) {
-            case 0:
-                methodString = (mContext.getResources().getStringArray(R.array.method_options)[0]);
-                holder.methodImage.setImageResource(R.drawable.ic_french_press);
-                break;
-            case 1:
-                methodString = (mContext.getResources().getStringArray(R.array.method_options)[1]);
-                holder.methodImage.setImageResource(R.drawable.ic_aeropress);
-                break;
-            case 2:
-                methodString = (mContext.getResources().getStringArray(R.array.method_options)[2]);
-                holder.methodImage.setImageResource(R.drawable.ic_pour_over);
-                break;
-            case 3:
-                methodString = (mContext.getResources().getStringArray(R.array.method_options)[3]);
-                holder.methodImage.setImageResource(R.drawable.ic_moka_pot);
-                break;
-        }
+            String methodString = "";
+            switch (coffee.getMethod()) {
+                case 0:
+                    methodString = (mContext.getResources().getStringArray(R.array.method_options)[0]);
+                    holder.methodImage.setImageResource(R.drawable.ic_french_press);
+                    break;
+                case 1:
+                    methodString = (mContext.getResources().getStringArray(R.array.method_options)[1]);
+                    holder.methodImage.setImageResource(R.drawable.ic_aeropress);
+                    break;
+                case 2:
+                    methodString = (mContext.getResources().getStringArray(R.array.method_options)[2]);
+                    holder.methodImage.setImageResource(R.drawable.ic_pour_over);
+                    break;
+                case 3:
+                    methodString = (mContext.getResources().getStringArray(R.array.method_options)[3]);
+                    holder.methodImage.setImageResource(R.drawable.ic_moka_pot);
+                    break;
+            }
 
-        // Set values on textViews
-        holder.method.setText(methodString);
-        holder.date.setText(coffee.getDate());
-        holder.extraction.setText(extractionString);
-        holder.ratio.setText(mContext.getString(R.string.ratio_text) + coffee.getRatio());
+            // Set values on textViews
+            holder.method.setText(methodString);
+            holder.date.setText(coffee.getDate());
+            holder.extraction.setText(extractionString);
+            holder.ratio.setText(mContext.getString(R.string.ratio_text) + coffee.getRatio());
+        }
     }
 
     void setCoffees(List<Coffee> coffees) {

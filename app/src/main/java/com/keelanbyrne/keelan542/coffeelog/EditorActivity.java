@@ -388,17 +388,6 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 setRatio(coffeeUsed, yield);
             }
 
-            /*
-            // Insert data into values
-            values.put(CoffeeEntry.COLUMN_LOG_METHOD, mMethod);
-            values.put(CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT, coffeeUsed);
-            values.put(CoffeeEntry.COLUMN_LOG_YIELD, yield);
-            values.put(CoffeeEntry.COLUMN_LOG_RATIO, mRatio);
-            values.put(CoffeeEntry.COLUMN_LOG_TIME, timeString);
-            values.put(CoffeeEntry.COLUMN_LOG_EXTRACTION, mExtraction);
-            values.put(CoffeeEntry.COLUMN_LOG_DATE, date);
-            */
-
             // Add comments to values if not empty
             if (!TextUtils.isEmpty(comments)) {
                 comments = "";
@@ -408,31 +397,6 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             Intent replyIntent = new Intent();
             replyIntent.putExtra(EXTRA_REPLY, coffee);
             setResult(RESULT_OK, replyIntent);
-
-
-            /*
-            if (mCurrentEntryUri == null) {
-                // Insert values into coffee_log database
-                Uri uri = getContentResolver().insert(CoffeeEntry.CONTENT_URI, values);
-
-                // Display toast depending on whether insertion successful or not
-                if (uri == null) {
-                    Toast.makeText(this, getString(R.string.insertion_successful), Toast.LENGTH_SHORT);
-                } else {
-                    Toast.makeText(this, getString(R.string.insertion_failed), Toast.LENGTH_SHORT);
-                }
-            } else {
-                // Update entry with values
-                int rowsUpdated = getContentResolver().update(mCurrentEntryUri, values, null, null);
-
-                // Display toast messages depending on whether update successfull or not
-                if (rowsUpdated != 0) {
-                    Toast.makeText(this, getString(R.string.update_successful), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, getString(R.string.update_failed), Toast.LENGTH_SHORT).show();
-                }
-            }
-            */
 
             finish();
         }
@@ -480,29 +444,6 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
     /*
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // Create a cursor loader that will take care
-        // of creating a cursor for data being displayed
-        String projection[] = {
-                CoffeeEntry._ID,
-                CoffeeEntry.COLUMN_LOG_METHOD,
-                CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT,
-                CoffeeEntry.COLUMN_LOG_YIELD,
-                CoffeeEntry.COLUMN_LOG_RATIO,
-                CoffeeEntry.COLUMN_LOG_TIME,
-                CoffeeEntry.COLUMN_LOG_EXTRACTION,
-                CoffeeEntry.COLUMN_LOG_DATE,
-                CoffeeEntry.COLUMN_LOG_COMMENT};
-
-        return new CursorLoader(this,
-                mCurrentEntryUri,
-                projection,
-                null,
-                null,
-                null);
-    }
-
-    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Move cursor to 0th position
         // before extracting columns
@@ -537,18 +478,6 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             mExtractionSpinner.setSelection(extraction);
             mShowDate.setText(date);
         }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        // Clear all fields.
-        mCoffeeUsedEditText.getText().clear();
-        mYieldEditText.getText().clear();
-        mShowRatio.setText("");
-        mMinutesEditText.getText().clear();
-        mSecondsEditText.getText().clear();
-        mShowDate.setText("");
-        mCommentsEditText.setText("");
     }
     */
 }

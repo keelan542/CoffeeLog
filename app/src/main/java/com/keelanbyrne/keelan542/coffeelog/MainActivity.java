@@ -1,14 +1,18 @@
 package com.keelanbyrne.keelan542.coffeelog;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CoffeeRecyclerAdapter.OnItemClickListener {
 
@@ -47,10 +51,18 @@ public class MainActivity extends AppCompatActivity implements CoffeeRecyclerAda
         mEmptyView.setVisibility(View.VISIBLE);
 
         // Find RecyclerView and set layout manager
+        mRecyclerAdapter = new CoffeeRecyclerAdapter(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
-        linearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setAdapter(mRecyclerAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        coffeeViewModel.getAllWords().observe(this, new Observer<List<Coffee>>() {
+            @Override
+            public void onChanged(@Nullable List<Coffee> coffees) {
+                mRecyclerAdapter.setCoffees(coffees);
+            }
+        });
     }
 
     @Override
@@ -62,56 +74,6 @@ public class MainActivity extends AppCompatActivity implements CoffeeRecyclerAda
             coffeeViewModel.insert(coffee);
         }
     }
-
-    /*
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // Create base uri
-        Uri baseUri = CoffeeEntry.CONTENT_URI;
-
-        // Create a custom loader that will take care
-        // of creating a cursor for data being displayed
-        String projection[] = {
-                CoffeeEntry._ID,
-                CoffeeEntry.COLUMN_LOG_METHOD,
-                CoffeeEntry.COLUMN_LOG_DATE,
-                CoffeeEntry.COLUMN_LOG_EXTRACTION,
-                CoffeeEntry.COLUMN_LOG_RATIO};
-
-        return new CursorLoader(this,
-                baseUri,
-                projection,
-                null,
-                null,
-                null);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-        mCursor = data;
-
-        // Make empty view visible if no data
-        if (data.getCount() == 0) {
-            mEmptyView.setVisibility(View.VISIBLE);
-        } else {
-            mEmptyView.setVisibility(View.INVISIBLE);
-        }
-
-        // Create instance of CoffeeRecyclerAdapter
-        mRecyclerAdapter = new CoffeeRecyclerAdapter(this, data);
-
-        // Set adapter on recycler view
-        mRecyclerView.setAdapter(mRecyclerAdapter);
-
-        // Set click listener on adapter
-        mRecyclerAdapter.setItemClickListener(this);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-    }
-    */
 
     @Override
     public void onListItemClick(View view, int position) {

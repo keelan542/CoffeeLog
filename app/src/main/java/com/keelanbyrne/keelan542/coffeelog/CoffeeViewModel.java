@@ -25,4 +25,20 @@ public class CoffeeViewModel extends AndroidViewModel {
     public void insert(Coffee coffee) {
         repository.insert(coffee);
     }
+
+    public void delete(Coffee coffee) {
+        repository.delete(coffee);
+    }
+
+    public void update(Coffee coffee) {
+        repository.update(coffee);
+    }
+
+    public void selectAll() {
+        repository.selectAll();
+    }
+
+    public void selectCoffee(Coffee coffee) {
+        repository.selectCoffee(coffee);
+    }
 }

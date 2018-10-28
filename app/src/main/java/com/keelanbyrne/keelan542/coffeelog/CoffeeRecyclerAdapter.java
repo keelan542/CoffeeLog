@@ -1,6 +1,7 @@
 package com.keelanbyrne.keelan542.coffeelog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,18 +21,9 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
     // Fields
     private Context mContext;
-    private OnItemClickListener mItemClickListener;
-
-    public interface OnItemClickListener {
-        void onListItemClick(View view, int position);
-    }
 
     CoffeeRecyclerAdapter(Context context) {
         mContext = context;
-    }
-
-    public void setItemClickListener(OnItemClickListener itemClickListener) {
-        mItemClickListener = itemClickListener;
     }
 
     @Override
@@ -45,7 +37,7 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
     public void onBindViewHolder(CustomViewHolder holder, int position) {
 
         if (coffees != null) {
-            Coffee coffee = coffees.get(position);
+            final Coffee coffee = coffees.get(position);
             String extractionString = "";
             switch (coffee.getExtraction()) {
                 case 0:
@@ -84,6 +76,13 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
             holder.date.setText(coffee.getDate());
             holder.extraction.setText(extractionString);
             holder.ratio.setText(mContext.getString(R.string.ratio_text) + coffee.getRatio());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, EditorActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -106,7 +105,7 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
         return super.getItemId(position);
     }
 
-    class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class CustomViewHolder extends RecyclerView.ViewHolder {
 
         // Get references to views of list item
         private TextView method;
@@ -124,12 +123,6 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
             extraction = (TextView) itemView.findViewById(R.id.extraction);
             ratio = (TextView) itemView.findViewById(R.id.ratio);
             methodImage = (ImageView) itemView.findViewById(R.id.method_image);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            mItemClickListener.onListItemClick(v, getAdapterPosition());
         }
     }
 }

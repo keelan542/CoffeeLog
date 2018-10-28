@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CoffeeRecyclerAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_COFFEE_ACTIVITY_REQUEST_CODE = 1;
 
@@ -73,9 +73,5 @@ public class MainActivity extends AppCompatActivity implements CoffeeRecyclerAda
             Coffee coffee = (Coffee) data.getSerializableExtra(EditorActivity.EXTRA_REPLY);
             coffeeViewModel.insert(coffee);
         }
-    }
-
-    @Override
-    public void onListItemClick(View view, int position) {
     }
 }

@@ -77,9 +77,6 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // Current entry uri
     private Uri mCurrentEntryUri;
 
-    // Loader id
-    private static final int LOADER_ID = 0;
-
     // Boolean to check whether entry has
     // been edited, and if so, trigger AlertDialog.
     private boolean mEntryHasChanged;

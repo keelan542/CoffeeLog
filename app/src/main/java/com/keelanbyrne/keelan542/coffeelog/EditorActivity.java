@@ -2,8 +2,8 @@ package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +29,8 @@ import java.util.GregorianCalendar;
 public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     public static final String EXTRA_REPLY = "com.example.android.coffeelistsql.REPLY";
+
+    private CoffeeViewModel coffeeViewModel;
 
     // Method spinner
     private Spinner methodSpinner;
@@ -73,7 +75,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     private TextView showRatio;
 
     // Current entry uri
-    private int itemClickedId;
+    private Coffee itemClicked;
 
     // Boolean to check whether entry has
     // been edited, and if so, trigger AlertDialog.
@@ -92,6 +94,10 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
+        itemClicked = (Coffee)getIntent().getSerializableExtra(getString(R.string.item_clicked_id_extra_tag));
+
+        coffeeViewModel = ViewModelProviders.of(this).get(CoffeeViewModel.class);
 
         // Get references to edit fields
         methodSpinner = (Spinner) findViewById(R.id.method_spinner);
@@ -141,19 +147,50 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         // If null, proceed with adding new entry, if not,
         // initialise loader to populate fields with data of entry
         // that was clicked on.
-        itemClickedId = getIntent().getIntExtra("itemClickedId", -1);
-        if (itemClickedId == -1) {
+        if (itemClicked == null) {
             setTitle(getString(R.string.title_add_entry));
         } else {
             setTitle(getString(R.string.title_edit_entry));
+            populateFields();
         }
+    }
+
+    private void populateFields() {
+        // Update editor fields and spinners with
+        // values from database
+        int method = itemClicked.getMethod();
+        String coffeeUsed = itemClicked.getCoffeeUsed();
+        String yield = itemClicked.getYield();
+        String ratio = itemClicked.getRatio();
+        String timeString = itemClicked.getTime();
+        int extraction = itemClicked.getExtraction();
+        String date = itemClicked.getDate();
+        String comments;
+        if (!TextUtils.isEmpty(itemClicked.getComment())) {
+            comments = itemClicked.getComment();
+            commentsEditText.setText(comments);
+        }
+
+        // Seperate timeString into minutes and seconds
+        int minutes = Integer.parseInt(timeString) / 60;
+        int seconds = Integer.parseInt(timeString) % 60;
+
+        // Set values from cursor on fields
+        methodSpinner.setSelection(method);
+        coffeeUsedEditText.setText(coffeeUsed);
+        yieldEditText.setText(yield);
+        showRatio.setText("1:" + ratio);
+        minutesEditText.setText(minutes + "");
+        secondsEditText.setText(seconds + "");
+        extractionSpinner.setSelection(extraction);
+        showDate.setText(date);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         // Hide delete button if in Add entry mode
-        if (itemClickedId == -1) {
+        if (itemClicked == null) {
             MenuItem item = menu.findItem(R.id.action_delete);
             item.setVisible(false);
         }
@@ -383,9 +420,11 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             }
 
             Coffee coffee = new Coffee(method, coffeeUsed, yield, ratio, timeString, extraction, date, comments);
-            Intent replyIntent = new Intent();
-            replyIntent.putExtra(EXTRA_REPLY, coffee);
-            setResult(RESULT_OK, replyIntent);
+            if (itemClicked == null) {
+                coffeeViewModel.insert(coffee);
+            } else {
+                coffeeViewModel.update(coffee);
+            }
 
             finish();
         }
@@ -393,7 +432,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
     private void deleteEntry() {
 
-
+        if (itemClicked  != null) {
+            coffeeViewModel.delete(itemClicked);
+        }
 
         finish();
     }
@@ -424,43 +465,4 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         ratio = String.valueOf(Math.round((yieldDouble / coffeeUsedDouble) * 100.0) / 100.0);
         showRatio.setText("1:" + ratio);
     }
-
-    /*
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Move cursor to 0th position
-        // before extracting columns
-        if (data.moveToFirst()) {
-
-            // Update editor fields and spinners with
-            // values from cursor
-            int method = data.getInt(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_METHOD));
-            String coffeeUsed = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_COFFEE_AMOUNT));
-            String yield = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_YIELD));
-            String ratio = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_RATIO));
-            String timeString = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_TIME));
-            int extraction = data.getInt(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_EXTRACTION));
-            String date = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_DATE));
-            String comments;
-            if (!TextUtils.isEmpty((data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_COMMENT))))) {
-                comments = data.getString(data.getColumnIndex(CoffeeEntry.COLUMN_LOG_COMMENT));
-                commentsEditText.setText(comments);
-            }
-
-            // Seperate timeString into minutes and seconds
-            int minutes = Integer.parseInt(timeString) / 60;
-            int seconds = Integer.parseInt(timeString) % 60;
-
-            // Set values from cursor on fields
-            methodSpinner.setSelection(method);
-            coffeeUsedEditText.setText(coffeeUsed);
-            yieldEditText.setText(yield);
-            showRatio.setText("1:" + ratio);
-            minutesEditText.setText(minutes + "");
-            secondsEditText.setText(seconds + "");
-            extractionSpinner.setSelection(extraction);
-            showDate.setText(date);
-        }
-    }
-    */
 }

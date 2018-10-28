@@ -80,7 +80,7 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, EditorActivity.class);
-                    intent.putExtra("itemClickedId", coffee.getId());
+                    intent.putExtra(mContext.getString(R.string.item_clicked_id_extra_tag), coffee);
                     mContext.startActivity(intent);
                 }
             });

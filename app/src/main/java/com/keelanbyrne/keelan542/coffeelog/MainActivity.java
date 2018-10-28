@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
     private CoffeeViewModel coffeeViewModel;
 
     // RecylerView
-    private RecyclerView mRecyclerView;
+    private RecyclerView recyclerView;
 
     // RecyclerView adapter
-    private CoffeeRecyclerAdapter mRecyclerAdapter;
+    private CoffeeRecyclerAdapter recyclerAdapter;
 
     // Emtpy view
-    private TextView mEmptyView;
+    private TextView emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,31 +47,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Get reference to empty view
-        mEmptyView = (TextView) findViewById(R.id.empty_view);
-        mEmptyView.setVisibility(View.VISIBLE);
+        emptyView = (TextView) findViewById(R.id.empty_view);
 
         // Find RecyclerView and set layout manager
-        mRecyclerAdapter = new CoffeeRecyclerAdapter(this);
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        mRecyclerView.setAdapter(mRecyclerAdapter);
+        recyclerAdapter = new CoffeeRecyclerAdapter(this);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_list);
+        recyclerView.setAdapter(recyclerAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         coffeeViewModel.getAllWords().observe(this, new Observer<List<Coffee>>() {
             @Override
             public void onChanged(@Nullable List<Coffee> coffees) {
-                mRecyclerAdapter.setCoffees(coffees);
+                recyclerAdapter.setCoffees(coffees);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == NEW_COFFEE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Coffee coffee = (Coffee) data.getSerializableExtra(EditorActivity.EXTRA_REPLY);
-            coffeeViewModel.insert(coffee);
-        }
     }
 }

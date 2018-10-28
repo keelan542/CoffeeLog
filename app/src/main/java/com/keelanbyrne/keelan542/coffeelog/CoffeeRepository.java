@@ -21,19 +21,31 @@ public class CoffeeRepository {
     }
 
     public void insert(Coffee coffee) {
-        new insertAsyncTask(coffeeDao, 0).execute(coffee);
+        new operationAsyncTask(coffeeDao, 0).execute(coffee);
     }
 
     public void delete(Coffee coffee) {
-
+        new operationAsyncTask(coffeeDao, 1).execute(coffee);
     }
 
-    private static class insertAsyncTask extends android.os.AsyncTask<Coffee, Void, Void> {
+    public void update(Coffee coffee) {
+        new operationAsyncTask(coffeeDao, 2).execute(coffee);
+    }
+
+    public void selectAll() {
+        new operationAsyncTask(coffeeDao, 3).execute();
+    }
+
+    public void selectCoffee(Coffee coffee) {
+        new operationAsyncTask(coffeeDao, 4).execute(coffee);
+    }
+
+    private static class operationAsyncTask extends android.os.AsyncTask<Coffee, Void, Void> {
 
         private CoffeeDao coffeeDaoAsync;
         private int operationCodeAsync;
 
-        insertAsyncTask(CoffeeDao dao, int operationCode) {
+        operationAsyncTask(CoffeeDao dao, int operationCode) {
             coffeeDaoAsync = dao;
             operationCodeAsync = operationCode;
         }
@@ -53,6 +65,8 @@ public class CoffeeRepository {
                 case 3:
                     coffeeDaoAsync.getAllCoffee();
                     break;
+                case 4:
+                    coffeeDaoAsync.getCoffee(coffees[0].getId());
             }
 
             return null;

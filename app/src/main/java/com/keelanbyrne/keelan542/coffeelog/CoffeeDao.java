@@ -21,6 +21,9 @@ public interface CoffeeDao {
     @Query("SELECT * from coffee_log")
     LiveData<List<Coffee>> getAllCoffee();
 
+    @Query("SELECT * from coffee_log where _id = :id")
+    Coffee getCoffee(int id);
+
     @Update
     void update(Coffee... coffee);
 }

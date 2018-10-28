@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
-
 import java.util.List;
 
 /**
@@ -30,9 +28,8 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
         void onListItemClick(View view, int position);
     }
 
-    CoffeeRecyclerAdapter(Context context, Cursor cursor) {
+    CoffeeRecyclerAdapter(Context context) {
         mContext = context;
-        mCursor = cursor;
     }
 
     public void setItemClickListener(OnItemClickListener itemClickListener) {
@@ -54,11 +51,11 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
             return;
 
         // Get required values from cursor object
-        int methodNumber = mCursor.getInt(mCursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_METHOD));
-        String methodString = "";
-        String dateString = mCursor.getString(mCursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_DATE));
-        String extractionString = mCursor.getString(mCursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_EXTRACTION));
-        String ratioString = mCursor.getString(mCursor.getColumnIndex(CoffeeEntry.COLUMN_LOG_RATIO));
+        int methodNumber = 0;
+        String methodString = "Under";
+        String dateString = "date";
+        String extractionString = "Under";
+        String ratioString = "1:10";
         int extractionNumber = Integer.parseInt(extractionString);
         switch (extractionNumber) {
             case 0:

@@ -1,13 +1,7 @@
 package com.keelanbyrne.keelan542.coffeelog;
 
-import android.app.LoaderManager;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ContentUris;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -15,18 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
-
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CoffeeRecyclerAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements CoffeeRecyclerAdapter.OnItemClickListener {
 
     public static final int NEW_COFFEE_ACTIVITY_REQUEST_CODE = 1;
 
     private CoffeeViewModel coffeeViewModel;
-
-    // Loader id
-    private static final int LOADER_ID = 1;
 
     // RecylerView
     private RecyclerView mRecyclerView;
@@ -34,14 +22,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // RecyclerView adapter
     private CoffeeRecyclerAdapter mRecyclerAdapter;
 
-    // Current entry uri
-    private Uri mCurrentEntryUri;
-
     // Emtpy view
     private TextView mEmptyView;
-
-    // Cursor
-    private Cursor mCursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +51,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         linearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-
-        // Initialise loader
-        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
@@ -81,10 +60,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (requestCode == NEW_COFFEE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Coffee coffee = (Coffee) data.getSerializableExtra(EditorActivity.EXTRA_REPLY);
             coffeeViewModel.insert(coffee);
-            Toast.makeText(this, String.valueOf(coffee.getId()), Toast.LENGTH_SHORT).show();
         }
     }
 
+    /*
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // Create base uri
@@ -132,22 +111,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }
+    */
 
     @Override
     public void onListItemClick(View view, int position) {
-
-        mCursor.moveToPosition(position);
-
-        // Form content uri with appended id of entry that was clicked on
-        mCurrentEntryUri = ContentUris.withAppendedId(CoffeeEntry.CONTENT_URI, mCursor.getInt(mCursor.getColumnIndex(CoffeeEntry._ID)));
-
-        // Create new intent to got to EditorActivity
-        Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-
-        // Set mCurrentEntryUri as data of intent
-        intent.setData(mCurrentEntryUri);
-
-        // Launch Editor activity to display data of selected entry
-        startActivity(intent);
     }
 }

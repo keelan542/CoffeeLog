@@ -23,10 +23,6 @@
                 android:name="android.support.android.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
-        <provider
-            android:authorities="com.keelanbyrne.keelan542.coffeelog"
-            android:name=".data.CoffeeProvider"
-            android:exported="false"/>
     </application>
 
 </manifest>

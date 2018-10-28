@@ -2,13 +2,9 @@ package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.LoaderManager;
 import android.content.ContentValues;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -28,13 +24,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
-
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     public static final String EXTRA_REPLY = "com.example.android.coffeelistsql.REPLY";
 
@@ -157,8 +151,6 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             setTitle(getString(R.string.title_add_entry));
         } else {
             setTitle(getString(R.string.title_edit_entry));
-
-            getLoaderManager().initLoader(LOADER_ID, null, this);
         }
     }
 
@@ -316,11 +308,11 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 String[] array = getResources().getStringArray(R.array.extraction_options);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(array[0])) {
-                        mExtraction = CoffeeEntry.EXTRACTION_UNDER;
+                        mExtraction = 0;
                     } else if (selection.equals(array[1])) {
-                        mExtraction = CoffeeEntry.EXTRACTION_BALANCED;
+                        mExtraction = 1;
                     } else {
-                        mExtraction = CoffeeEntry.EXTRACTION_OVER;
+                        mExtraction = 2;
                     }
                 }
             }
@@ -340,13 +332,13 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
                 String[] array = getResources().getStringArray(R.array.method_options);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(array[0])) {
-                        mMethod = CoffeeEntry.METHOD_FRENCH_PRESS;
+                        mMethod = 0;
                     } else if (selection.equals(array[1])) {
-                        mMethod = CoffeeEntry.METHOD_AEROPRESS;
+                        mMethod = 1;
                     } else if (selection.equals(array[2])) {
-                        mMethod = CoffeeEntry.METHOD_POUR_OVER;
+                        mMethod = 2;
                     } else {
-                        mMethod = CoffeeEntry.METHOD_MOKA_POT;
+                        mMethod = 3;
                     }
                 }
             }
@@ -486,6 +478,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mShowRatio.setText("1:" + mRatio);
     }
 
+    /*
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // Create a cursor loader that will take care
@@ -557,4 +550,5 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         mShowDate.setText("");
         mCommentsEditText.setText("");
     }
+    */
 }

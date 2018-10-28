@@ -11,24 +11,20 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by keelan542 on 16/08/2017.
- */
-
 public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAdapter.CustomViewHolder> {
 
-    private List<Coffee> coffees; // cached copy of coffee logs
+    // Cached copy of coffee logs
+    private List<Coffee> coffees;
 
-    // Fields
-    private Context mContext;
+    private Context context;
 
     CoffeeRecyclerAdapter(Context context) {
-        mContext = context;
+        this.context = context;
     }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         CustomViewHolder customViewHolder = new CustomViewHolder(view);
         return customViewHolder;
     }
@@ -41,32 +37,32 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
             String extractionString = "";
             switch (coffee.getExtraction()) {
                 case 0:
-                    extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[0];
+                    extractionString = (context.getResources().getStringArray(R.array.extraction_options))[0];
                     break;
                 case 1:
-                    extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[1];
+                    extractionString = (context.getResources().getStringArray(R.array.extraction_options))[1];
                     break;
                 case 2:
-                    extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[2];
+                    extractionString = (context.getResources().getStringArray(R.array.extraction_options))[2];
                     break;
             }
 
             String methodString = "";
             switch (coffee.getMethod()) {
                 case 0:
-                    methodString = (mContext.getResources().getStringArray(R.array.method_options)[0]);
+                    methodString = (context.getResources().getStringArray(R.array.method_options)[0]);
                     holder.methodImage.setImageResource(R.drawable.ic_french_press);
                     break;
                 case 1:
-                    methodString = (mContext.getResources().getStringArray(R.array.method_options)[1]);
+                    methodString = (context.getResources().getStringArray(R.array.method_options)[1]);
                     holder.methodImage.setImageResource(R.drawable.ic_aeropress);
                     break;
                 case 2:
-                    methodString = (mContext.getResources().getStringArray(R.array.method_options)[2]);
+                    methodString = (context.getResources().getStringArray(R.array.method_options)[2]);
                     holder.methodImage.setImageResource(R.drawable.ic_pour_over);
                     break;
                 case 3:
-                    methodString = (mContext.getResources().getStringArray(R.array.method_options)[3]);
+                    methodString = (context.getResources().getStringArray(R.array.method_options)[3]);
                     holder.methodImage.setImageResource(R.drawable.ic_moka_pot);
                     break;
             }
@@ -75,13 +71,13 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
             holder.method.setText(methodString);
             holder.date.setText(coffee.getDate());
             holder.extraction.setText(extractionString);
-            holder.ratio.setText(mContext.getString(R.string.ratio_text) + coffee.getRatio());
+            holder.ratio.setText(context.getString(R.string.ratio_text) + coffee.getRatio());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, EditorActivity.class);
-                    intent.putExtra(mContext.getString(R.string.item_clicked_id_extra_tag), coffee);
-                    mContext.startActivity(intent);
+                    Intent intent = new Intent(context, EditorActivity.class);
+                    intent.putExtra(context.getString(R.string.item_clicked_id_extra_tag), coffee);
+                    context.startActivity(intent);
                 }
             });
         }

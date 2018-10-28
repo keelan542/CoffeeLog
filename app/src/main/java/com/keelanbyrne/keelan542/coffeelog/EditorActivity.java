@@ -28,8 +28,7 @@ import java.util.GregorianCalendar;
 
 public class EditorActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    public static final String EXTRA_REPLY = "com.example.android.coffeelistsql.REPLY";
-
+    // Ref to view model for accessing database operations
     private CoffeeViewModel coffeeViewModel;
 
     // Method spinner
@@ -74,14 +73,14 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     // TextView to display ratio
     private TextView showRatio;
 
-    // Current entry uri
+    // Current entry clicked
     private Coffee itemClicked;
 
     // Boolean to check whether entry has
     // been edited, and if so, trigger AlertDialog.
     private boolean entryHasChanged;
 
-    // Touch listener to check whether product has been edited
+    // Touch listener to check whether entry has been edited
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -143,10 +142,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
-        // Check whether mCurrentEntryUri is null.
+        // Check whether itemClicked is null.
         // If null, proceed with adding new entry, if not,
-        // initialise loader to populate fields with data of entry
-        // that was clicked on.
+        // populate fields with data of entry to be updated
         if (itemClicked == null) {
             setTitle(getString(R.string.title_add_entry));
         } else {
@@ -156,6 +154,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     private void populateFields() {
+
         // Update editor fields and spinners with
         // values from database
         int method = itemClicked.getMethod();
@@ -188,7 +187,9 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+
         super.onPrepareOptionsMenu(menu);
+
         // Hide delete button if in Add entry mode
         if (itemClicked == null) {
             MenuItem item = menu.findItem(R.id.action_delete);

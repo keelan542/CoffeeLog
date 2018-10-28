@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     // RecyclerView adapter
     private CoffeeRecyclerAdapter recyclerAdapter;
-
-    // Emtpy view
-    private TextView emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Get reference to empty view
-        emptyView = (TextView) findViewById(R.id.empty_view);
+        // Snackbar to prompt user to make entry
+        Snackbar.make(findViewById(R.id.FAB), "Tap the plus button to make an entry!", Snackbar.LENGTH_SHORT).show();
 
         // Find RecyclerView and set layout manager
         recyclerAdapter = new CoffeeRecyclerAdapter(this);

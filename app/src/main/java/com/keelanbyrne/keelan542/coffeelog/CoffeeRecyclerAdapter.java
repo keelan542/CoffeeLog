@@ -1,7 +1,6 @@
 package com.keelanbyrne.keelan542.coffeelog;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
     // Fields
     private Context mContext;
-    private Cursor mCursor;
     private OnItemClickListener mItemClickListener;
 
     public interface OnItemClickListener {
@@ -45,19 +43,10 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        // Move cursor to position in holder and return
-        // early if null
-        if (!mCursor.moveToPosition(position))
-            return;
 
-        // Get required values from cursor object
-        int methodNumber = 0;
-        String methodString = "Under";
-        String dateString = "date";
-        String extractionString = "Under";
-        String ratioString = "1:10";
-        int extractionNumber = Integer.parseInt(extractionString);
-        switch (extractionNumber) {
+        Coffee coffee = coffees.get(position);
+        String extractionString = "";
+        switch (coffee.getExtraction()) {
             case 0:
                 extractionString = (mContext.getResources().getStringArray(R.array.extraction_options))[0];
                 break;
@@ -69,7 +58,8 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
                 break;
         }
 
-        switch (methodNumber) {
+        String methodString = "";
+        switch (coffee.getMethod()) {
             case 0:
                 methodString = (mContext.getResources().getStringArray(R.array.method_options)[0]);
                 holder.methodImage.setImageResource(R.drawable.ic_french_press);
@@ -90,9 +80,9 @@ public class CoffeeRecyclerAdapter extends RecyclerView.Adapter<CoffeeRecyclerAd
 
         // Set values on textViews
         holder.method.setText(methodString);
-        holder.date.setText(dateString);
+        holder.date.setText(coffee.getDate());
         holder.extraction.setText(extractionString);
-        holder.ratio.setText(mContext.getString(R.string.ratio_text) + ratioString);
+        holder.ratio.setText(mContext.getString(R.string.ratio_text) + coffee.getRatio());
     }
 
     void setCoffees(List<Coffee> coffees) {

@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -75,7 +74,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     private TextView mShowRatio;
 
     // Current entry uri
-    private Uri mCurrentEntryUri;
+    private int itemClickedId;
 
     // Boolean to check whether entry has
     // been edited, and if so, trigger AlertDialog.
@@ -143,8 +142,8 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
         // If null, proceed with adding new entry, if not,
         // initialise loader to populate fields with data of entry
         // that was clicked on.
-        mCurrentEntryUri = getIntent().getData();
-        if (mCurrentEntryUri == null) {
+        itemClickedId = getIntent().getIntExtra("itemClickedId", -1);
+        if (itemClickedId == -1) {
             setTitle(getString(R.string.title_add_entry));
         } else {
             setTitle(getString(R.string.title_edit_entry));
@@ -155,7 +154,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         // Hide delete button if in Add entry mode
-        if (mCurrentEntryUri == null) {
+        if (itemClickedId == -1) {
             MenuItem item = menu.findItem(R.id.action_delete);
             item.setVisible(false);
         }
@@ -401,13 +400,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
     private void deleteEntry() {
 
-        int rowsDeleted = getContentResolver().delete(mCurrentEntryUri, null, null);
 
-        if (rowsDeleted != 0) {
-            Toast.makeText(this, getString(R.string.editor_delete_successful), Toast.LENGTH_SHORT);
-        } else {
-            Toast.makeText(this, getString(R.string.editor_delete_failed), Toast.LENGTH_SHORT).show();
-        }
 
         finish();
     }

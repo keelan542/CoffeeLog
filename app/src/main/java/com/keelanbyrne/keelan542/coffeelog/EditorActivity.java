@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -415,7 +414,7 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
 
             Coffee coffee = new Coffee(mMethod, coffeeUsed, yield, mRatio, timeString, mExtraction, date, comments);
             Intent replyIntent = new Intent();
-            replyIntent.putExtra(EXTRA_REPLY, (Serializable) coffee);
+            replyIntent.putExtra(EXTRA_REPLY, coffee);
             setResult(RESULT_OK, replyIntent);
 
 

@@ -2,7 +2,6 @@ package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.os.AsyncTask;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class CoffeeRepository {
         new insertAsyncTask(coffeeDao).execute(coffee);
     }
 
-    private static class insertAsyncTask extends AsyncTask<Coffee, Void, Void> {
+    private static class insertAsyncTask extends android.os.AsyncTask<Coffee, Void, Void> {
 
         private CoffeeDao coffeeDaoAsync;
 

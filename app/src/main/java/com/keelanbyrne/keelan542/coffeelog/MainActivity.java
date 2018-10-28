@@ -1,6 +1,7 @@
 package com.keelanbyrne.keelan542.coffeelog;
 
 import android.app.LoaderManager;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -14,12 +15,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.keelanbyrne.keelan542.coffeelog.data.CoffeeContract.CoffeeEntry;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CoffeeRecyclerAdapter.OnItemClickListener {
 
     public static final int NEW_COFFEE_ACTIVITY_REQUEST_CODE = 1;
+
+    private CoffeeViewModel coffeeViewModel;
 
     // Loader id
     private static final int LOADER_ID = 1;
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        coffeeViewModel = ViewModelProviders.of(this).get(CoffeeViewModel.class);
 
         // Setup FAB to open editor activity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
@@ -74,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (requestCode == NEW_COFFEE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Coffee coffee = (Coffee) data.getSerializableExtra(EditorActivity.EXTRA_REPLY);
-
+            coffeeViewModel.insert(coffee);
+            Toast.makeText(this, String.valueOf(coffee.getId()), Toast.LENGTH_SHORT).show();
         }
     }
 

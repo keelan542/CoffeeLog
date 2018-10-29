@@ -1,6 +1,6 @@
 # CoffeeLog
 An android app that allows users to keep a log of coffee they brew; method, ratio, extraction and time.
-This project demonstrates using a ContentProvider to manipulate data from a sqlite database and displaying content using the RecyclerView with custom adapter pattern. The app can be found on the Play Store, <a href="https://play.google.com/store/apps/details?id=com.keelanbyrne.keelan542.coffeelog">here</a>.
+This project demonstrates using the Room library to store data, and displaying this data using the RecyclerView with custom adapter pattern. LiveData, ViewModel, and Room are a subset of the Android Architecture Components. The app can be found on the Play Store, <a href="https://play.google.com/store/apps/details?id=com.keelanbyrne.keelan542.coffeelog">here</a>.
 
 ## Acknowledgments
 - Launcher/store icon made by <a href="http://www.freepik.com">www.freepik.com</a> from <a href="http://www.flaticon.com">www.flaticon.com</a>

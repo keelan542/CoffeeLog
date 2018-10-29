@@ -25,6 +25,6 @@ public interface CoffeeDao {
     @Query("SELECT * from coffee_log where _id = :id")
     Coffee getCoffee(int id);
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(Coffee... coffee);
 }

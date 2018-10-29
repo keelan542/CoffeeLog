@@ -424,7 +424,39 @@ public class EditorActivity extends AppCompatActivity implements DatePickerDialo
             if (itemClicked == null) {
                 coffeeViewModel.insert(coffee);
             } else {
-                coffeeViewModel.update(coffee);
+                if (itemClicked.getMethod() != method) {
+                    itemClicked.setMethod(method);
+                }
+
+                if (!itemClicked.getCoffeeUsed().equals(coffeeUsed)) {
+                    itemClicked.setCoffeeUsed(coffeeUsed);
+                }
+
+                if (!itemClicked.getYield().equals(yield)) {
+                    itemClicked.setYield(yield);
+                }
+
+                if (!itemClicked.getRatio().equals(ratio)) {
+                    itemClicked.setRatio(ratio);
+                }
+
+                if (!itemClicked.getTime().equals(timeString)) {
+                    itemClicked.setTime(timeString);
+                }
+
+                if (itemClicked.getExtraction() != extraction) {
+                    itemClicked.setExtraction(extraction);
+                }
+
+                if (!itemClicked.getDate().equals(date)) {
+                    itemClicked.setDate(date);
+                }
+
+                if (!itemClicked.getComment().equals(comments)) {
+                    itemClicked.setComment(comments);
+                }
+
+                coffeeViewModel.update(itemClicked);
             }
 
             finish();

@@ -16,8 +16,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int NEW_COFFEE_ACTIVITY_REQUEST_CODE = 1;
-
     private CoffeeViewModel coffeeViewModel;
 
     // RecylerView
@@ -33,19 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
         coffeeViewModel = ViewModelProviders.of(this).get(CoffeeViewModel.class);
 
-        // Setup FAB to open editor activity
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                startActivityForResult(intent, NEW_COFFEE_ACTIVITY_REQUEST_CODE);
-            }
-        });
-
-        // Snackbar to prompt user to make entry
-        Snackbar.make(findViewById(R.id.FAB), "Tap the plus button to make an entry!", Snackbar.LENGTH_SHORT).show();
-
         // Find RecyclerView and set layout manager
         recyclerAdapter = new CoffeeRecyclerAdapter(this);
         recyclerView = (RecyclerView) findViewById(R.id.rv_list);
@@ -53,11 +38,26 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        coffeeViewModel.getAllWords().observe(this, new Observer<List<Coffee>>() {
+        coffeeViewModel.getAllCoffee().observe(this, new Observer<List<Coffee>>() {
             @Override
             public void onChanged(@Nullable List<Coffee> coffees) {
                 recyclerAdapter.setCoffees(coffees);
             }
         });
+
+        // Setup FAB to open editor activity
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Snackbar to prompt user to make entry
+        Snackbar.make(findViewById(R.id.FAB), "Tap the plus button to make an entry!", Snackbar.LENGTH_SHORT).show();
     }
+
+
 }

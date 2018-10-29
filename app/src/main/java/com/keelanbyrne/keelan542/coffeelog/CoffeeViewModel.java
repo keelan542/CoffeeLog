@@ -10,16 +10,16 @@ public class CoffeeViewModel extends AndroidViewModel {
 
     private CoffeeRepository repository;
 
-    private LiveData<List<Coffee>> allWords;
+    private LiveData<List<Coffee>> allCoffee;
 
     public CoffeeViewModel(Application application) {
         super(application);
         repository = new CoffeeRepository(application);
-        allWords = repository.getAllCoffee();
+        allCoffee = repository.getAllCoffee();
     }
 
-    LiveData<List<Coffee>> getAllWords() {
-        return allWords;
+    LiveData<List<Coffee>> getAllCoffee() {
+        return allCoffee;
     }
 
     public void insert(Coffee coffee) {
